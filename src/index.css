@@ -1,0 +1,175 @@
+@import 'tailwindcss';
+
+/* ───────────────────────────── Design tokens ─────────────────────────────
+   키즈피지오 아동발달센터 — warm, trustworthy, playful-but-clean.
+   Accessible (WCAG AA), no neon, light-mode only.                          */
+@theme {
+  /* Brand — teal/mint: healthcare trust + calm */
+  --color-brand-50: #e9f8f6;
+  --color-brand-100: #c8ede8;
+  --color-brand-200: #97ddd4;
+  --color-brand-300: #62c9bd;
+  --color-brand-400: #36b3a6;
+  --color-brand-500: #1f9a8e;
+  --color-brand-600: #168175;
+  --color-brand-700: #136a60;
+  --color-brand-800: #14534c;
+  --color-brand-900: #133f3a;
+
+  /* Coral — warm CTA / energy */
+  --color-coral-50: #fff2ec;
+  --color-coral-100: #ffe1d4;
+  --color-coral-200: #ffc7b0;
+  --color-coral-300: #ffb59a;
+  --color-coral-400: #ff9170;
+  --color-coral-500: #ff7a4d;
+  --color-coral-600: #f2602f;
+
+  /* Sun — playful yellow accent */
+  --color-sun-300: #ffe199;
+  --color-sun-400: #ffd25e;
+  --color-sun-500: #ffc233;
+
+  /* Sky — secondary, gentle */
+  --color-sky-soft-300: #a9cbff;
+  --color-sky-soft-400: #7fb0ff;
+  --color-sky-soft-500: #5a93f5;
+
+  /* Neutrals */
+  --color-cream: #fffbf6;
+  --color-sand: #f6efe6;
+  --color-ink: #233038;
+  --color-muted: #5c6b73;
+
+  /* Typography */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    'Apple SD Gothic Neo', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Baloo 2', 'Pretendard Variable', Pretendard, sans-serif;
+
+  /* Radius scale — soft, rounded for a friendly kids feel */
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 30px -12px rgb(31 154 142 / 0.25);
+  --shadow-card: 0 14px 40px -18px rgb(35 48 56 / 0.22);
+
+  /* Animation */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-blob: blob 18s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes blob {
+  0%,
+  100% {
+    border-radius: 42% 58% 63% 37% / 42% 45% 55% 58%;
+  }
+  50% {
+    border-radius: 58% 42% 37% 63% / 55% 58% 42% 45%;
+  }
+}
+
+/* ───────────────────────────── Base ───────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    font-weight: 800;
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ───────────────────────── Reusable utilities ───────────────────────── */
+@layer components {
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      transform 0.18s ease,
+      box-shadow 0.18s ease,
+      background-color 0.18s ease;
+    white-space: nowrap;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  .btn-primary {
+    background: var(--color-coral-500);
+    color: #fff;
+    padding: 0.9rem 1.6rem;
+    box-shadow: 0 12px 24px -10px rgb(255 122 77 / 0.6);
+  }
+  .btn-primary:hover {
+    background: var(--color-coral-600);
+    transform: translateY(-2px);
+  }
+
+  .btn-ghost {
+    background: #fff;
+    color: var(--color-brand-700);
+    padding: 0.9rem 1.6rem;
+    border: 1.5px solid var(--color-brand-100);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-brand-300);
+    background: var(--color-brand-50);
+  }
+}

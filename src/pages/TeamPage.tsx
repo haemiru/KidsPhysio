@@ -1,0 +1,59 @@
+import PageHero from '../components/PageHero'
+import CtaBand from '../components/CtaBand'
+import { team } from '../data/site'
+
+export default function TeamPage() {
+  return (
+    <>
+      <PageHero
+        eyebrow="치료진 소개"
+        title={
+          <>
+            아이를 진심으로 대하는 <span className="text-brand-600">전문 치료진</span>
+          </>
+        }
+        desc="국가자격을 갖춘 분야별 전문가가 한 팀이 되어 아이의 성장을 이끕니다. 평균 경력 8년 이상의 치료사가 함께합니다."
+        crumbs={[{ label: '치료진' }]}
+      />
+
+      <section className="py-20 lg:py-24">
+        <div className="container-page grid gap-8 sm:grid-cols-2">
+          {team.map((t) => (
+            <article
+              key={t.name}
+              className="group flex gap-5 rounded-3xl bg-white p-5 shadow-card sm:p-6"
+            >
+              <div className="h-32 w-28 shrink-0 overflow-hidden rounded-2xl sm:h-40 sm:w-36">
+                <img
+                  src={t.photo}
+                  alt={`${t.name} ${t.role}`}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex flex-col justify-center">
+                <h2 className="text-xl font-extrabold text-ink">{t.name}</h2>
+                <p className="mt-1 text-sm font-semibold text-brand-600">{t.role}</p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {t.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className="rounded-full bg-brand-50 px-2.5 py-1 text-xs font-semibold text-brand-700"
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <CtaBand
+        title="우리 아이는 어떤 선생님과 만날까요"
+        desc="상담을 통해 아이에게 가장 잘 맞는 치료사를 배정해 드립니다."
+      />
+    </>
+  )
+}
