@@ -34,6 +34,14 @@
     />
 
     <title>키즈피지오 아동발달센터 | 아이의 가능성을 키우는 곳</title>
+
+    <!-- 검토용 테마: 첫 페인트 전에 저장된 테마 적용(색상 깜빡임 방지) -->
+    <script>
+      try {
+        var t = localStorage.getItem('kp-theme')
+        if (t && t !== 'mint') document.documentElement.setAttribute('data-theme', t)
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -155,7 +155,7 @@
     background: var(--color-coral-500);
     color: #fff;
     padding: 0.9rem 1.6rem;
-    box-shadow: 0 12px 24px -10px rgb(255 122 77 / 0.6);
+    box-shadow: 0 12px 24px -10px color-mix(in srgb, var(--color-coral-500) 55%, transparent);
   }
   .btn-primary:hover {
     background: var(--color-coral-600);
@@ -172,4 +172,84 @@
     border-color: var(--color-brand-300);
     background: var(--color-brand-50);
   }
+}
+
+/* ───────────────────── 검토용 테마 오버라이드 ─────────────────────
+   data-theme 속성으로 런타임에 전체 색상 교체 (ThemeSwitcher 위젯).
+   기본값(속성 없음/‘mint’) = 위 @theme 의 민트 팔레트.
+   디자인 확정 후 선택된 테마를 @theme 에 반영하고 이 블록은 제거.       */
+
+/* B. 차분한 블루 / 네이비 */
+:root[data-theme='blue'] {
+  --color-brand-50: #eef4fa;
+  --color-brand-100: #d3e3f3;
+  --color-brand-200: #a7c6e7;
+  --color-brand-300: #74a3d6;
+  --color-brand-400: #4480c2;
+  --color-brand-500: #1e5f8c;
+  --color-brand-600: #184d72;
+  --color-brand-700: #163f5d;
+  --color-coral-50: #e6f7f4;
+  --color-coral-100: #c2efe8;
+  --color-coral-200: #8ddfd3;
+  --color-coral-300: #57ccbc;
+  --color-coral-400: #36bdac;
+  --color-coral-500: #2aa99a;
+  --color-coral-600: #1f8c80;
+  --color-sun-300: #ffe39e;
+  --color-sun-400: #ffd062;
+  --color-sun-500: #f7bd35;
+  --color-sky-soft-300: #aeccff;
+  --color-sky-soft-400: #84acf7;
+  --color-sky-soft-500: #5b8eea;
+}
+
+/* C. 따뜻한 라벤더 / 피치 */
+:root[data-theme='lavender'] {
+  --color-brand-50: #f3eefc;
+  --color-brand-100: #e4d8f7;
+  --color-brand-200: #cab4ee;
+  --color-brand-300: #b092e3;
+  --color-brand-400: #9a76d9;
+  --color-brand-500: #8560cf;
+  --color-brand-600: #6f4cb6;
+  --color-brand-700: #593c93;
+  --color-coral-50: #fff1ed;
+  --color-coral-100: #ffe0d8;
+  --color-coral-200: #ffc6b8;
+  --color-coral-300: #ffa994;
+  --color-coral-400: #ff977f;
+  --color-coral-500: #fb8568;
+  --color-coral-600: #ec6a4d;
+  --color-sun-300: #ffe6a8;
+  --color-sun-400: #ffd673;
+  --color-sun-500: #fcc547;
+  --color-sky-soft-300: #f4cbe3;
+  --color-sky-soft-400: #eaa9d2;
+  --color-sky-soft-500: #db84bf;
+}
+
+/* D. 생기발랄 오렌지 / 스카이 */
+:root[data-theme='orange'] {
+  --color-brand-50: #fff3e9;
+  --color-brand-100: #ffe1c9;
+  --color-brand-200: #ffc699;
+  --color-brand-300: #ffab6a;
+  --color-brand-400: #ff9743;
+  --color-brand-500: #fb8324;
+  --color-brand-600: #e76c12;
+  --color-brand-700: #bf560f;
+  --color-coral-50: #e7f9fc;
+  --color-coral-100: #c4f0f5;
+  --color-coral-200: #90e2ec;
+  --color-coral-300: #5cd3e1;
+  --color-coral-400: #38c4d4;
+  --color-coral-500: #25b2c3;
+  --color-coral-600: #1995a6;
+  --color-sun-300: #ffe488;
+  --color-sun-400: #ffd23f;
+  --color-sun-500: #fcc110;
+  --color-sky-soft-300: #a9d6ff;
+  --color-sky-soft-400: #7dbdff;
+  --color-sky-soft-500: #4ea2f5;
 }
