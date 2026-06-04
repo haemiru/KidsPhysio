@@ -24,12 +24,20 @@ export default function TeamPage() {
               className="group flex gap-5 rounded-3xl bg-white p-5 shadow-card sm:p-6"
             >
               <div className="h-32 w-28 shrink-0 overflow-hidden rounded-2xl sm:h-40 sm:w-36">
-                <img
-                  src={t.photo}
-                  alt={`${t.name} ${t.role}`}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
+                {t.photo ? (
+                  <img
+                    src={t.photo}
+                    alt={`${t.name} ${t.role}`}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-brand-50">
+                    <span className="text-5xl" aria-hidden>
+                      {t.icon}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="flex flex-col justify-center">
                 <h2 className="text-xl font-extrabold text-ink">{t.name}</h2>

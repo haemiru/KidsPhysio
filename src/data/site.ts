@@ -181,7 +181,10 @@ export type Therapist = {
   name: string
   role: string
   tags: string[]
-  photo: string
+  /** 실물 사진(있을 때만 표시). 없으면 icon 대체 블록을 보여준다 */
+  photo?: string
+  /** 사진이 없는 팀 카드의 대체 아이콘(이모지) */
+  icon?: string
 }
 
 export const team: Therapist[] = [
@@ -189,29 +192,25 @@ export const team: Therapist[] = [
     name: '장지예 (짱샘)',
     role: '센터장 · 소아 물리치료사',
     tags: ['소아재활 25년', '호흡·후각 통합', '전자책 30여 권 저술'],
-    photo:
-      'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=640&q=80',
+    photo: '/team/jjangsaem.jpg',
   },
   {
     name: '감각통합·작업치료팀',
     role: '작업치료사 · 감각통합 전문',
     tags: ['감각통합(SI)', '소근육·일상기술'],
-    photo:
-      'https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=640&q=80',
+    icon: '🧩',
   },
   {
     name: '언어치료팀',
     role: '언어재활사',
     tags: ['언어 이해·표현', '조음·유창성'],
-    photo:
-      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=640&q=80',
+    icon: '💬',
   },
   {
     name: '놀이·정서지원팀',
     role: '놀이심리상담사',
     tags: ['정서·사회성', '원시반사 통합 놀이'],
-    photo:
-      'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=640&q=80',
+    icon: '🧸',
   },
 ]
 

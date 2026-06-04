@@ -22,12 +22,20 @@ export default function Team() {
               className="group overflow-hidden rounded-3xl bg-white shadow-card"
             >
               <div className="aspect-[4/5] overflow-hidden">
-                <img
-                  src={t.photo}
-                  alt={`${t.name} ${t.role}`}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
+                {t.photo ? (
+                  <img
+                    src={t.photo}
+                    alt={`${t.name} ${t.role}`}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-brand-50">
+                    <span className="text-6xl" aria-hidden>
+                      {t.icon}
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="p-5">
                 <h3 className="text-lg font-extrabold text-ink">{t.name}</h3>
