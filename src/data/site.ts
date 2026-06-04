@@ -161,7 +161,8 @@ export const founder = {
   nick: '짱샘',
   role: '소아·청소년 재활 전문가 · 키즈피지오 센터장',
   lab: '피지오 후각 연구소 소장',
-  // 사진 대신 톤에 맞는 이모지 아바타 사용 (실제 사진으로 교체 가능)
+  // 실물 프로필 사진 (없으면 avatar 이모지로 대체)
+  photo: '/team/jjangsaem-avatar.jpg',
   avatar: '👩‍⚕️',
   lead: '“근육보다 먼저, 아이의 숨과 신경계를 봅니다.”',
   bio: [

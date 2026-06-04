@@ -11,9 +11,17 @@ export default function Founder() {
         <div className="relative mx-auto w-full max-w-sm">
           <div className="absolute inset-0 -z-10 translate-x-5 translate-y-5 rounded-[2rem] bg-brand-100/70" />
           <div className="rounded-[2rem] bg-white p-8 text-center shadow-card">
-            <span className="mx-auto grid h-28 w-28 place-items-center rounded-full bg-brand-50 text-6xl">
-              {founder.avatar}
-            </span>
+            {founder.photo ? (
+              <img
+                src={founder.photo}
+                alt={`${founder.name} ${founder.nick}`}
+                className="mx-auto h-28 w-28 rounded-full object-cover shadow-sm ring-4 ring-brand-50"
+              />
+            ) : (
+              <span className="mx-auto grid h-28 w-28 place-items-center rounded-full bg-brand-50 text-6xl">
+                {founder.avatar}
+              </span>
+            )}
             <h3 className="mt-5 text-2xl font-extrabold text-ink">
               {founder.name}
               <span className="ml-2 text-brand-600">{founder.nick}</span>
