@@ -24,14 +24,14 @@ export default function Logo({ light = false }: { light?: boolean }) {
             light ? 'text-white' : 'text-ink'
           }`}
         >
-          KidsPhysio
+          짱샘 키즈피지오
         </span>
         <span
           className={`text-[11px] font-semibold tracking-tight ${
             light ? 'text-white/70' : 'text-muted'
           }`}
         >
-          키즈피지오 아동발달센터
+          아동발달센터 · 피지오 후각 연구소
         </span>
       </span>
     </Link>

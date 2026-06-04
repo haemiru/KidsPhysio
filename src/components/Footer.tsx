@@ -29,9 +29,17 @@ export default function Footer() {
         <div>
           <Logo light />
           <p className="mt-4 max-w-xs text-sm leading-relaxed">
-            아이 한 명 한 명의 가능성을 믿고, 전문 치료진이 가족과 함께 성장의
-            길을 걷습니다.
+            25년 임상의 소아재활 전문가 짱샘과 함께. 발달치료부터 책방, 아로마
+            테라피까지 — 근육보다 먼저 아이의 숨과 마음을 살핍니다.
           </p>
+          <a
+            href={site.bookshop}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-white/10 px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-500"
+          >
+            📚 짱샘의 책방 바로가기
+          </a>
           <div className="mt-5 flex gap-3">
             <a
               href={site.instagram}

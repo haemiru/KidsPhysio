@@ -9,6 +9,9 @@ import {
   BadgeCheck,
   Users,
   ShieldCheck,
+  Wind,
+  Flower2,
+  BookOpen,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -23,6 +26,9 @@ const map: Record<string, LucideIcon> = {
   BadgeCheck,
   Users,
   ShieldCheck,
+  Wind,
+  Flower2,
+  BookOpen,
 }
 
 type Props = {

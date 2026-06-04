@@ -16,9 +16,9 @@ export default function About() {
             />
           </div>
           <div className="absolute -bottom-6 -right-3 max-w-[14rem] rounded-2xl bg-brand-600 p-5 text-white shadow-card sm:-right-6">
-            <p className="font-display text-3xl font-extrabold">12년+</p>
+            <p className="font-display text-3xl font-extrabold">25년</p>
             <p className="mt-1 text-sm text-white/85">
-              한 자리에서 쌓아온 아동발달 전문 노하우
+              짱샘이 현장에서 쌓아온 소아재활 노하우
             </p>
           </div>
         </div>
@@ -26,7 +26,7 @@ export default function About() {
         {/* Copy */}
         <div>
           <span className="inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-sm font-bold text-brand-700 shadow-soft">
-            왜 키즈피지오일까요
+            왜 짱샘 키즈피지오일까요
           </span>
           <h2 className="mt-4 text-3xl font-extrabold text-ink sm:text-4xl">
             아이를 가장 잘 아는 건
@@ -34,8 +34,8 @@ export default function About() {
             <span className="text-brand-600">꾸준히 곁에 있는 전문가</span>입니다
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-muted">
-            키즈피지오는 평가부터 치료, 가정 연계까지 아이의 성장 여정을 끝까지
-            함께합니다. 변화는 작은 신뢰에서 시작됩니다.
+            짱샘 키즈피지오는 평가부터 치료, 호흡·후각 케어, 가정 연계까지 아이의
+            성장 여정을 끝까지 함께합니다. 변화는 작은 신뢰에서 시작됩니다.
           </p>
 
           <div className="mt-8 grid gap-5 sm:grid-cols-2">

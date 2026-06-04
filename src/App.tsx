@@ -4,6 +4,8 @@ import Home from './pages/Home'
 import AboutPage from './pages/AboutPage'
 import ProgramsPage from './pages/ProgramsPage'
 import ProgramDetailPage from './pages/ProgramDetailPage'
+import BookshopPage from './pages/BookshopPage'
+import AromaPage from './pages/AromaPage'
 import TeamPage from './pages/TeamPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
@@ -18,6 +20,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/programs" element={<ProgramsPage />} />
         <Route path="/programs/:id" element={<ProgramDetailPage />} />
+        <Route path="/bookshop" element={<BookshopPage />} />
+        <Route path="/aroma" element={<AromaPage />} />
         <Route path="/team" element={<TeamPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />

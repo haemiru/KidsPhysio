@@ -16,7 +16,7 @@ export default function Hero() {
         <div className="text-center lg:text-left">
           <span className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-bold text-brand-700 shadow-soft">
             <Star className="h-4 w-4 fill-sun-400 text-sun-400" aria-hidden="true" />
-            부모 만족도 98% · 누적 8,500명 아동과 함께
+            소아재활 25년 임상 · 짱샘 장지예
           </span>
 
           <h1 className="mt-6 text-balance text-4xl font-extrabold text-ink sm:text-5xl lg:text-[3.4rem]">
@@ -41,9 +41,9 @@ export default function Hero() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted lg:mx-0">
-            감각통합부터 물리·작업·언어·놀이치료까지. 국가자격 전문 치료진이
-            아이 한 명 한 명에게 꼭 맞는 <strong className="text-ink">1:1 맞춤 발달
-            프로그램</strong>으로 건강한 성장을 함께합니다.
+            25년 임상의 소아재활 전문가 <strong className="text-ink">짱샘</strong>이 1:1 맞춤
+            발달치료부터 발달 전자책 30여 권, 아이를 위한 아로마 테라피까지 —
+            <strong className="text-ink"> 근육보다 먼저 아이의 숨과 마음</strong>을 살핍니다.
           </p>
 
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:items-start lg:justify-start">
@@ -59,9 +59,9 @@ export default function Hero() {
 
           <dl className="mt-10 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm lg:justify-start">
             {[
-              '국가자격 치료진 1:1',
-              '표준화 발달 평가',
-              '부모 연계 코칭',
+              '1:1 맞춤 발달치료',
+              '짱샘의 책방',
+              '아로마 테라피',
             ].map((t) => (
               <div key={t} className="flex items-center gap-2">
                 <span className="grid h-5 w-5 place-items-center rounded-full bg-brand-100 text-brand-700">
@@ -92,11 +92,11 @@ export default function Hero() {
           </div>
           <div className="absolute -bottom-5 right-2 hidden items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-card sm:flex">
             <span className="grid h-10 w-10 place-items-center rounded-full bg-coral-100 text-lg">
-              🧩
+              📚
             </span>
             <div>
-              <p className="text-xs font-semibold text-muted">맞춤 프로그램</p>
-              <p className="text-sm font-extrabold text-ink">6개 전문 영역</p>
+              <p className="text-xs font-semibold text-muted">짱샘의 책방</p>
+              <p className="text-sm font-extrabold text-ink">발달 전자책 30여 권</p>
             </div>
           </div>
         </div>
