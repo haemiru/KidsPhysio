@@ -2,11 +2,50 @@ import { useState } from 'react'
 import { Phone, Mail, MapPin, Clock, CheckCircle2 } from 'lucide-react'
 import { site } from '../data/site'
 
+// 숫자만 추출해 010-XXXX-XXXX 형식으로 표시용 포매팅
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length < 4) return digits
+  if (digits.length < 8) return `${digits.slice(0, 3)}-${digits.slice(3)}`
+  return `${digits.slice(0, 3)}-${digits.slice(3, 7)}-${digits.slice(7)}`
+}
+
+// 한글·영문·공백만 허용 (숫자·특수문자 제거)
+function sanitizeName(value: string) {
+  return value.replace(/[^가-힣ㄱ-ㅎa-zA-Z\s]/g, '')
+}
+
 export default function Contact() {
   const [sent, setSent] = useState(false)
+  const [name, setName] = useState('')
+  const [nameError, setNameError] = useState('')
+  const [phone, setPhone] = useState('')
+  const [phoneError, setPhoneError] = useState('')
+
+  const isNameValid = name.trim().length >= 2
+  const phoneDigits = phone.replace(/\D/g, '')
+  const isPhoneValid = /^010\d{8}$/.test(phoneDigits)
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(sanitizeName(e.target.value))
+    if (nameError) setNameError('')
+  }
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhone(e.target.value))
+    if (phoneError) setPhoneError('')
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    if (!isNameValid) {
+      setNameError('보호자 성함을 2자 이상 입력해 주세요.')
+      return
+    }
+    if (!isPhoneValid) {
+      setPhoneError('010으로 시작하는 11자리 휴대폰 번호를 입력해 주세요.')
+      return
+    }
     // 데모: 실제 전송 대신 확인 메시지를 표시합니다. (백엔드 연동 시 교체)
     setSent(true)
   }
@@ -92,19 +131,43 @@ export default function Contact() {
                         required
                         autoComplete="name"
                         placeholder="홍길동"
-                        className={inputCls}
+                        value={name}
+                        onChange={handleNameChange}
+                        aria-invalid={nameError ? true : undefined}
+                        aria-describedby={nameError ? 'name-error' : undefined}
+                        className={`${inputCls} ${
+                          nameError ? 'border-red-400 focus:border-red-400 focus:ring-red-100' : ''
+                        }`}
                       />
+                      {nameError && (
+                        <p id="name-error" className="mt-1.5 text-sm font-medium text-red-500">
+                          {nameError}
+                        </p>
+                      )}
                     </Field>
                     <Field label="연락처" htmlFor="phone">
                       <input
                         id="phone"
                         name="phone"
                         type="tel"
+                        inputMode="numeric"
                         required
                         autoComplete="tel"
                         placeholder="010-1234-5678"
-                        className={inputCls}
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        maxLength={13}
+                        aria-invalid={phoneError ? true : undefined}
+                        aria-describedby={phoneError ? 'phone-error' : undefined}
+                        className={`${inputCls} ${
+                          phoneError ? 'border-red-400 focus:border-red-400 focus:ring-red-100' : ''
+                        }`}
                       />
+                      {phoneError && (
+                        <p id="phone-error" className="mt-1.5 text-sm font-medium text-red-500">
+                          {phoneError}
+                        </p>
+                      )}
                     </Field>
                   </div>
                   <Field label="아이 나이(개월/세)" htmlFor="age">

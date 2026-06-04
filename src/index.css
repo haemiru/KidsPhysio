@@ -59,6 +59,12 @@
   /* Animation */
   --animate-float: float 6s ease-in-out infinite;
   --animate-blob: blob 18s ease-in-out infinite;
+
+  /* ── 코칭 예약 시스템(booking) 전용 토큰 — 라벤더 계열 ── */
+  --color-primary: #9b89b3;
+  --color-primary-dark: #7d6a9c;
+  --color-secondary: #a8e6cf;
+  --color-accent: #ff8b94;
 }
 
 @keyframes float {
@@ -171,5 +177,17 @@
   .btn-ghost:hover {
     border-color: var(--color-brand-300);
     background: var(--color-brand-50);
+  }
+
+  /* 코칭 예약 시스템(booking) 카드 */
+  .card {
+    border-radius: 1rem;
+    background: #fff;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --tw-ring-color: rgb(0 0 0 / 0.05);
+    box-shadow:
+      0 1px 2px 0 rgb(0 0 0 / 0.05),
+      0 0 0 1px rgb(0 0 0 / 0.05);
   }
 }

@@ -23,7 +23,7 @@ export const site = {
   /** 짱샘의 책방 (전자책방) */
   bookshop: 'https://jjangsaem.com',
   kakao: '#',
-  instagram: '#',
+  instagram: 'https://instagram.com/seochojiye',
   blog: '#',
 } as const
 
