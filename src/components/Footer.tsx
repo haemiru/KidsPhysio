@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import Logo from './Logo'
-import { nav, site } from '../data/site'
+import { business, nav, site } from '../data/site'
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -99,16 +99,45 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="container-page flex flex-col items-center justify-between gap-2 py-6 text-xs text-white/45 sm:flex-row">
-          <p>© {new Date().getFullYear()} {site.fullName}. All rights reserved.</p>
-          <p className="flex gap-4">
-            <a href="#" className="hover:text-white/80">
-              개인정보처리방침
-            </a>
-            <a href="#" className="hover:text-white/80">
-              이용약관
-            </a>
-          </p>
+        <div className="container-page py-6 text-xs leading-relaxed text-white/45">
+          <dl className="flex flex-wrap gap-x-4 gap-y-1.5">
+            <div className="flex gap-1.5">
+              <dt className="text-white/35">상호</dt>
+              <dd>{business.companyName}</dd>
+            </div>
+            <div className="flex gap-1.5">
+              <dt className="text-white/35">대표</dt>
+              <dd>{business.ceo}</dd>
+            </div>
+            <div className="flex gap-1.5">
+              <dt className="text-white/35">사업자등록번호</dt>
+              <dd>{business.bizRegNo}</dd>
+            </div>
+            <div className="flex gap-1.5">
+              <dt className="text-white/35">전화</dt>
+              <dd>
+                <a href={business.phoneHref} className="hover:text-white/80">
+                  {business.phone}
+                </a>
+              </dd>
+            </div>
+            <div className="flex w-full gap-1.5 sm:w-auto">
+              <dt className="text-white/35">주소</dt>
+              <dd>{business.address}</dd>
+            </div>
+          </dl>
+
+          <div className="mt-5 flex flex-col items-center justify-between gap-2 border-t border-white/5 pt-4 sm:flex-row">
+            <p>© {new Date().getFullYear()} {business.companyName}. All rights reserved.</p>
+            <p className="flex gap-4">
+              <a href="#" className="hover:text-white/80">
+                개인정보처리방침
+              </a>
+              <a href="#" className="hover:text-white/80">
+                이용약관
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </footer>

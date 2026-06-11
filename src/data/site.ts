@@ -27,6 +27,18 @@ export const site = {
   blog: '#',
 } as const
 
+/** 사업자 정보 (카카오 비즈니스 채널 연관성 검증·전자상거래 표시 의무용) */
+export const business = {
+  companyName: '주식회사 짱샘에듀',
+  ceo: '하성재',
+  bizRegNo: '711-81-03824',
+  /** 사업자등록증상 사업장 소재지 */
+  address: '서울특별시 강남구 강남대로112길 47, 2층 672A호(논현동)',
+  phone: '010-5776-3325',
+  phoneHref: 'tel:01057763325',
+  email: 'ybongee@naver.com',
+} as const
+
 export const nav = [
   { label: '센터소개', to: '/about' },
   { label: '발달치료', to: '/programs' },
