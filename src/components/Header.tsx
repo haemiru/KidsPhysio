@@ -61,6 +61,9 @@ export default function Header() {
             <Phone className="h-4 w-4" strokeWidth={2.4} aria-hidden="true" />
             {site.phone}
           </a>
+          <Link to="/coaching" className="btn btn-ghost text-[15px]">
+            4주 코칭
+          </Link>
           <Link to="/contact" className="btn btn-primary text-[15px]">
             무료 상담 예약
           </Link>
@@ -97,9 +100,16 @@ export default function Header() {
               </NavLink>
             ))}
             <Link
+              to="/coaching"
+              onClick={() => setOpen(false)}
+              className="btn btn-ghost mt-2"
+            >
+              4주 코칭 신청
+            </Link>
+            <Link
               to="/contact"
               onClick={() => setOpen(false)}
-              className="btn btn-primary mt-2"
+              className="btn btn-primary mt-1"
             >
               무료 상담 예약
             </Link>

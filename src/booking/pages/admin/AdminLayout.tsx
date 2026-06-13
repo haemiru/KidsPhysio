@@ -21,7 +21,7 @@ export default function AdminLayout({
     <div className="min-h-screen bg-[#faf9fc]">
       <header className="border-b border-black/5 bg-white">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
-          <span className="font-bold text-primary-dark">관리자 · 브레인센트</span>
+          <span className="font-bold text-primary-dark">관리자 · 키즈피지오 코칭</span>
           <div className="flex items-center gap-3 text-sm text-muted">
             <span className="hidden sm:inline">{email}</span>
             <button onClick={onSignOut} className="rounded-lg border border-black/10 px-3 py-1.5 hover:bg-black/5">

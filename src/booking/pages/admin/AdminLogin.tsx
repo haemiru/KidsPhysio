@@ -26,7 +26,7 @@ export default function AdminLogin({
     <div className="grid min-h-screen place-items-center bg-[#faf9fc] px-5">
       <div className="w-full max-w-sm">
         <h1 className="text-center text-xl font-bold text-primary-dark">관리자 로그인</h1>
-        <p className="mt-1 text-center text-sm text-muted">브레인센트 코어 리셋 운영</p>
+        <p className="mt-1 text-center text-sm text-muted">짱샘 키즈피지오 코칭 운영</p>
 
         {loggedInButNotAdmin ? (
           <div className="card mt-6 text-center">

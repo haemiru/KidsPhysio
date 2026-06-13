@@ -2,6 +2,7 @@ import Hero from '../components/Hero'
 import Stats from '../components/Stats'
 import Founder from '../components/Founder'
 import Programs from '../components/Programs'
+import Coaching from '../components/Coaching'
 import Process from '../components/Process'
 import Bookshop from '../components/Bookshop'
 import Aroma from '../components/Aroma'
@@ -18,6 +19,7 @@ export default function Home() {
       <Stats />
       <Founder />
       <Programs />
+      <Coaching />
       <Process />
       <Bookshop />
       <Aroma />

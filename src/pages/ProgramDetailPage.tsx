@@ -89,6 +89,25 @@ export default function ProgramDetailPage() {
                 <ArrowRight className="h-5 w-5" aria-hidden="true" />
               </Link>
             </div>
+
+            {program.id === 'breath' && (
+              <div className="rounded-3xl border-2 border-brand-100 bg-brand-50 p-7">
+                <span className="inline-flex rounded-full bg-brand-600 px-3 py-1 text-xs font-bold text-white">
+                  4주 코칭 프로그램
+                </span>
+                <h3 className="mt-4 text-lg font-extrabold text-ink">
+                  집에서 이어가는 호흡·후각 4주 코칭
+                </h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                  후각·호흡·원시반사를 기반으로 한 4주 신경계 코어 회복 프로그램입니다.
+                  초기 1:1 상담과 주간 체크인으로 가정에서 루틴을 만들어 갑니다.
+                </p>
+                <Link to="/coaching" className="btn btn-primary mt-6 w-full">
+                  4주 코칭 신청하기
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </Link>
+              </div>
+            )}
           </aside>
         </div>
       </section>

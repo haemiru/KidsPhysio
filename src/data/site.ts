@@ -42,6 +42,7 @@ export const business = {
 export const nav = [
   { label: '센터소개', to: '/about' },
   { label: '발달치료', to: '/programs' },
+  { label: '코칭', to: '/coaching' },
   { label: '책방', to: '/bookshop' },
   { label: '아로마', to: '/aroma' },
   { label: '치료진', to: '/team' },

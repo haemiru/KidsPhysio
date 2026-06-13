@@ -5,11 +5,11 @@ export default function BookingHome() {
   return (
     <PublicLayout>
       <section className="text-center">
-        <p className="text-sm font-semibold text-accent">피지오 후각 연구소</p>
+        <p className="text-sm font-semibold text-accent">짱샘 키즈피지오</p>
         <h1 className="mt-2 text-3xl font-bold leading-snug text-ink">
-          브레인센트 코어 리셋
+          호흡·후각 4주 코칭
           <br />
-          코칭 신청
+          신청
         </h1>
         <p className="mt-4 text-muted">
           후각·호흡·원시반사 기반
