@@ -15,11 +15,11 @@ export default function Team() {
           desc="국가자격을 갖춘 분야별 전문가가 한 팀이 되어 아이의 성장을 이끕니다."
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-14 flex flex-wrap justify-center gap-6">
           {team.map((t) => (
             <article
               key={t.name}
-              className="group overflow-hidden rounded-3xl bg-white shadow-card"
+              className="group w-full overflow-hidden rounded-3xl bg-white shadow-card sm:w-72"
             >
               <div className="aspect-[4/5] overflow-hidden">
                 {t.photo ? (

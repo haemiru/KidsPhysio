@@ -47,6 +47,7 @@ export const nav = [
   { label: '후각발달훈련', to: '/aroma' },
   { label: '치료진', to: '/team' },
   { label: '칼럼', to: '/blog' },
+  { label: '설문', to: '/survey' },
   { label: '오시는 길', to: '/contact' },
 ] as const
 
@@ -151,7 +152,7 @@ export const founder = {
   role: '소아·청소년 재활 전문가 · 키즈피지오 센터장',
   lab: '피지오 후각 연구소 소장',
   // 실물 프로필 사진 (없으면 avatar 이모지로 대체)
-  photo: '/team/jjangsaem-avatar.jpg',
+  photo: '/team/jjangsaem.png',
   avatar: '👩‍⚕️',
   lead: '“근육보다 먼저, 아이의 숨과 신경계를 봅니다.”',
   bio: [
@@ -182,13 +183,7 @@ export const team: Therapist[] = [
     name: '장지예 (짱샘)',
     role: '센터장 · 소아 물리치료사',
     tags: ['소아재활 25년', '호흡·후각 통합', '전자책 30여 권 저술'],
-    photo: '/team/jjangsaem.jpg',
-  },
-  {
-    name: '놀이·정서지원팀',
-    role: '놀이심리상담사',
-    tags: ['정서·사회성', '원시반사 통합 놀이'],
-    icon: '🧸',
+    photo: '/team/jjangsaem.png',
   },
 ]
 

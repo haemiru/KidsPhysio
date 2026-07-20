@@ -17,11 +17,11 @@ export default function TeamPage() {
       />
 
       <section className="py-20 lg:py-24">
-        <div className="container-page grid gap-8 sm:grid-cols-2">
+        <div className="container-page flex flex-wrap justify-center gap-8">
           {team.map((t) => (
             <article
               key={t.name}
-              className="group flex gap-5 rounded-3xl bg-white p-5 shadow-card sm:p-6"
+              className="group flex w-full gap-5 rounded-3xl bg-white p-5 shadow-card sm:w-[32rem] sm:p-6"
             >
               <div className="h-32 w-28 shrink-0 overflow-hidden rounded-2xl sm:h-40 sm:w-36">
                 {t.photo ? (

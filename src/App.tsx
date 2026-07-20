@@ -10,6 +10,7 @@ import TeamPage from './pages/TeamPage'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
+import SurveyPage from './pages/SurveyPage'
 import NotFound from './pages/NotFound'
 
 // 코칭 예약 시스템(booking) — 자체 레이아웃(PublicLayout)을 쓰는 독립 페이지들
@@ -37,6 +38,7 @@ function App() {
         <Route path="/team" element={<TeamPage />} />
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
+        <Route path="/survey" element={<SurveyPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
