@@ -21,6 +21,8 @@ export default function Contact() {
   const [nameError, setNameError] = useState('')
   const [phone, setPhone] = useState('')
   const [phoneError, setPhoneError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const isNameValid = name.trim().length >= 2
   const phoneDigits = phone.replace(/\D/g, '')
@@ -36,7 +38,7 @@ export default function Contact() {
     if (phoneError) setPhoneError('')
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!isNameValid) {
       setNameError('보호자 성함을 2자 이상 입력해 주세요.')
@@ -46,8 +48,29 @@ export default function Contact() {
       setPhoneError('010으로 시작하는 11자리 휴대폰 번호를 입력해 주세요.')
       return
     }
-    // 데모: 실제 전송 대신 확인 메시지를 표시합니다. (백엔드 연동 시 교체)
-    setSent(true)
+    // FormData 는 await 이전에 동기적으로 읽어둔다 (이후 e.currentTarget 이 무효화됨)
+    const fd = new FormData(e.currentTarget)
+    setSubmitError('')
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/consult-submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone,
+          age: String(fd.get('age') ?? ''),
+          message: String(fd.get('message') ?? ''),
+          company: String(fd.get('company') ?? ''), // 허니팟(봇 차단)
+        }),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setSent(true)
+    } catch {
+      setSubmitError('전송 중 문제가 발생했어요. 잠시 후 다시 시도하시거나 010-5686-4182로 연락 주세요.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -122,6 +145,15 @@ export default function Contact() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <h3 className="text-2xl font-extrabold text-ink">상담 신청서</h3>
+                  {/* 봇 차단용 허니팟 — 사용자에게 보이지 않음 */}
+                  <input
+                    type="text"
+                    name="company"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="hidden"
+                  />
                   <div className="grid gap-5 sm:grid-cols-2">
                     <Field label="보호자 성함" htmlFor="name">
                       <input
@@ -198,8 +230,15 @@ export default function Contact() {
                       개인정보 수집·이용에 동의합니다. (상담 목적, 보관 후 즉시 파기)
                     </span>
                   </label>
-                  <button type="submit" className="btn btn-primary w-full text-base">
-                    무료 상담 신청하기
+                  {submitError && (
+                    <p className="text-sm font-medium text-red-500">{submitError}</p>
+                  )}
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="btn btn-primary w-full text-base disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {submitting ? '신청 중…' : '무료 상담 신청하기'}
                   </button>
                 </form>
               )}

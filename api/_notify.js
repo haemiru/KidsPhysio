@@ -1,5 +1,5 @@
 import { admin } from './_supabase.js'
-import { sendAlimtalk } from './_solapi.js'
+import { sendAlimtalk, parsePhones } from './_solapi.js'
 
 // 서버측 KST 일시 포맷: "5월 30일(금) 오후 2:00"
 export function fmtKST(iso) {
@@ -26,20 +26,25 @@ async function loadBookings(applicationId) {
   return data ?? []
 }
 
-// 호스트에게 신규 신청 알림
+// 호스트에게 신규 신청 알림 (HOST_NOTIFY_PHONE 에 콤마로 여러 번호 지정 가능)
 export async function notifyHostNewApplication(app) {
-  const to = process.env.HOST_NOTIFY_PHONE
-  return sendAlimtalk({
-    to,
-    templateId: process.env.SOLAPI_TPL_NEW_APPLICATION_HOST,
-    kind: 'new_application',
-    applicationId: app.id,
-    variables: {
-      '#{보호자}': app.guardian_name ?? '',
-      '#{아이}': app.child_name ?? '',
-      '#{연락처}': app.guardian_phone ?? '',
-    },
-  })
+  const hosts = parsePhones(process.env.HOST_NOTIFY_PHONE)
+  const variables = {
+    '#{보호자}': app.guardian_name ?? '',
+    '#{아이}': app.child_name ?? '',
+    '#{연락처}': app.guardian_phone ?? '',
+  }
+  return Promise.all(
+    hosts.map((to) =>
+      sendAlimtalk({
+        to,
+        templateId: process.env.SOLAPI_TPL_NEW_APPLICATION_HOST,
+        kind: 'new_application',
+        applicationId: app.id,
+        variables,
+      }),
+    ),
+  )
 }
 
 // 신청자에게 예약 조회 링크 발송 (매직 링크)
