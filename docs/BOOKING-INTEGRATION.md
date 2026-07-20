@@ -2,9 +2,10 @@
 
 > KidsPhysio(짱샘 키즈피지오) 사이트에 **regist-form 예약 시스템**을 이식한 작업 기록.
 > 다시 돌아와 이어서 작업할 때 이 문서부터 읽으면 됩니다.
-> 최초 작성: 2026-06-04 · **최종 갱신: 2026-06-16** · 최종 커밋: `fb3a7b5` (main)
+> 최초 작성: 2026-06-04 · **최종 갱신: 2026-07-21** · 최종 커밋: `2abcfe2` (main)
 >
-> **⏭️ 다음에 할 일**: 오픈 전 남은 건 **실브라우저 end-to-end 검증 1회**(신청→슬롯Hold→무통장 결제→알림톡 발송)뿐. 상세는 맨 아래 §16 "다음에 돌아오면 곧바로 할 일".
+> **⏭️ 예약 시스템(booking)**: 오픈 전 남은 건 실브라우저 end-to-end 검증 1회(신청→슬롯Hold→무통장 결제→알림톡 발송)뿐. 상세는 맨 아래 "⏭️ 다음에 돌아오면 곧바로 할 일".
+> **🆕 2026-07 세션(§17)**: 예약과 별개로 **메인 사이트 콘텐츠·브랜딩 개편 + 설문(`/survey`)·무료상담 폼(`/contact`) 백엔드** 신규 구축·배포. 저장 + 문자 알림까지 동작 확인 완료. **상세는 맨 아래 §17.**
 
 ---
 
@@ -14,6 +15,8 @@
 KidsPhysio(React+TS+Vite) 안으로 **TypeScript로 변환해 통합**했고, 원본 폴더는 삭제했다.
 
 **현재 상태(2026-06-16)**: 코드 통합·환경변수(로컬·Vercel)·배포(kidsphysio.kr)·솔라피 알림톡 승인·브랜딩 통일·메인 사이트 진입점 연결·개인정보 처리방침까지 **모두 완료**. 빌드/린트 통과. **오픈 전 남은 건 실브라우저 end-to-end 검증 1회 + 솔라피 캐시 충전 검토**(§16 맨 아래).
+
+> **🆕 2026-07 추가 세션(§17)**: 위 예약 시스템과 **별개로**, 메인 사이트 콘텐츠·브랜딩 개편 + **설문(`/survey`→`rf_survey_responses`)·무료상담 폼(`Contact`→`rf_consultations` + 사장님 문자 알림)** 백엔드를 신규 구축·배포. 전자책 50여권·대표번호 010-5686-4182·치료진 "발달재활 전문가"·아로마→"후각발달훈련" 등 반영. **저장·문자 발송 동작 확인 완료.** 상세 §17.
 
 ---
 
@@ -437,3 +440,75 @@ RPC: `rf_is_admin()`(RLS용), `rf_submit_application(jsonb)`(동의검증+삽입
 ### 참고
 - **점검 스크립트**(git 미추적, `scripts/`): `solapi-test.mjs`(잔액·템플릿상태, `--send`로 실발송 1건), `solapi-channels.mjs`(채널 목록), `solapi-new-channel-status.mjs`(검수상태). `.env.local` 직접 파싱.
 - 키 출처·복구는 §11·§13, 솔라피 채널 분리는 §15.
+
+---
+
+## 17. 메인 사이트 콘텐츠 개편 + 설문·무료상담 폼 백엔드 (2026-07-20~21)
+
+> §0~16은 **코칭 예약 시스템**(booking) 이야기. 이 세션은 **메인 사이트 콘텐츠/브랜딩 개편**과, 예약과 별개인 **신규 백엔드 기능 2종**(설문 저장·무료상담 접수 + 문자 알림). 빌드(tsc) 통과, 브라우저로 확인, main push·자동배포 반영, 실제 저장·문자 발송까지 동작 확인 완료.
+
+### A. 메인 사이트 콘텐츠·브랜딩 개편
+| 항목 | 내용 | 파일 |
+|---|---|---|
+| 헤더 내비 깨짐 수정 | 메뉴 글자 세로 줄바꿈 문제 → `whitespace-nowrap` + 가로 메뉴를 **xl(≥1280px)** 에서만 표시, 그 이하 햄버거 | `Header.tsx` |
+| 아로마 → **후각발달훈련** | 메뉴·홈 섹션·`/aroma` 페이지·히어로·푸터·메타 명칭 통일. **`/aroma` 경로는 유지**(기존 링크 보존) | `site.ts`, `Aroma.tsx`, `AromaPage.tsx`, `Hero.tsx`, `Footer.tsx`, `index.html` |
+| 발달 프로그램 3종 삭제 | 감각통합·작업치료·언어치료 제거 → **6→3**(물리치료·호흡후각훈련·놀이원시반사통합). `programDetails`도 정리. "6가지/6개 영역"→3 | `site.ts`, `Programs.tsx`, `ProgramsPage.tsx` |
+| 전자책 수 | 30여 권 → **50여 권**, 통계 30+ → 50+ | 전 노출 지점 |
+| 대표 전화번호 | 010-5776-3325 → **010-5686-4182** (헤더·히어로·푸터·사업자정보·설문 안내 등) ⚠️ 아래 D의 발신/수신 번호와 **별개** | `site.ts` 등 |
+| "전문 치료진" → **"발달재활 전문가"** | 제목·프로그램·상담·CTA·진행단계 전체 통일, "국가자격을 갖춘~" 문구 삭제 | `Team.tsx`, `TeamPage.tsx`, `Programs.tsx`, `ProgramsPage.tsx`, `Contact.tsx`, `CtaBand.tsx`, `site.ts` |
+| 히어로 체크칩 추가 | "신경계 육아 코칭", "브레인센트 코칭" | `Hero.tsx` |
+| 통계 정리 | "5종 아로마·후각 케어 라인" 삭제 → **25년/50+/3개 영역** 3칸 | `site.ts`, `Stats.tsx`, `AboutPage.tsx` |
+
+> 코칭 프로그램 자체 이름(예약 시스템의 "호흡·후각 4주 코칭")은 사용자 지시로 **그대로 유지**. 히어로 칩에 "브레인센트 코칭" 문구만 추가.
+
+### B. 짱샘 프로필 사진
+- 새 헤드샷 **`public/team/jjangsaem.png`**(340×526)로 교체(기존 배포본에서 깨지던 `jjangsaem.jpg` 대체). `team[0].photo` + `founder.photo` 둘 다 이 파일로 통일 → 치료진·홈 소개·센터소개 일관.
+- 원형/카드 사진 **머리 잘림 수정**: `object-cover object-top`(`Founder.tsx`, `AboutPage.tsx`, `Team.tsx`, `TeamPage.tsx`).
+- 놀이·정서지원팀 삭제 → 치료진 **짱샘 1명**, 단일 카드 가운데 정렬(flex-wrap justify-center).
+
+### C. 설문 (Brain Scent Project 종료 설문) — 신규 기능
+- 네비 '설문' 탭 + 라우트 **`/survey`**. `src/pages/SurveyPage.tsx`(신규) + `src/data/survey.ts`(신규 스키마: **10섹션 + 추가문항**, 유형 = 단일/다중[최대 N개 제한]/5점 척도/NPS 0-10/서술형). 익명 제출.
+- 저장: **`api/survey-submit.js`**(신규) → Supabase **`rf_survey_responses`**. RLS on + 공개정책 없음(서버 service_role만). 세분화 컬럼(child_age·diagnosis·nps·app_intent·marketing_consent) + 전체 `answers` jsonb.
+- 마이그레이션 **`supabase/migrations/0005_survey.sql`** — **사용자가 Supabase SQL Editor에서 실행 완료.**
+- 응답 확인: Supabase Table Editor → `rf_survey_responses`.
+
+### D. 무료 상담 폼(Contact) 실동작화 + 사장님 문자 알림 — 신규 기능
+> ⚠️ **핵심 발견**: 홈/오시는길 하단 "무료 상담 신청서"(`Contact.tsx`)는 **데모였음** — 제출해도 가짜 성공 화면만 뜨고 **데이터가 버려짐**(어디에도 저장·전송 안 됨). 이번에 실제 접수로 전환.
+
+- **폼**: `Contact.tsx` — POST `/api/consult-submit`, 로딩/에러 상태, **허니팟**(봇 차단, 문자 과금 방지). `/contact` 페이지도 같은 `<Contact/>` 재사용이라 자동 반영.
+- **저장 + 알림**: **`api/consult-submit.js`**(신규) → **`rf_consultations`** 저장 후 사장님께 **일반 문자(LMS)** 발송. 문자 실패해도 저장은 성공(신청 우선).
+- **`api/_solapi.js` 확장**(예약 시스템과 공유 파일 — 추가만, 기존 로직 불변): 템플릿 불필요한 `sendSms`(LMS) 추가, `logNotification`에 `channel` 인자, `parsePhones`(콤마 다중 번호) 추가.
+- **`api/_notify.js`**: 예약 호스트 알림(`notifyHostNewApplication`)도 다중 번호 지원(콤마값에 안 깨지게).
+- 마이그레이션 **`supabase/migrations/0006_consultations.sql`** — **사용자 실행 완료.** RLS on, 공개정책 없음.
+- 확인: Supabase Table Editor → `rf_consultations`(신청), `rf_notifications`(발송 로그, channel=sms·kind=consultation).
+
+#### ★ 문자 알림 환경변수 — 3개 번호를 절대 혼동하지 말 것
+| 환경변수 | 값(2026-07-21) | 의미 |
+|---|---|---|
+| `HOST_NOTIFY_PHONE` | `010-5686-4182,010-7700-3324` | 알림 **받는** 번호(콤마로 여러 명, `parsePhones`가 분해). 로컬 `.env.local` + Vercel 양쪽 |
+| `SOLAPI_SENDER_PHONE` | **`010-7700-3324`** | 문자 **보내는** 번호. **솔라피 콘솔에 발신번호로 등록·인증된 번호여야 함** |
+| 사이트 표시번호(`site.phone`) | `010-5686-4182` | 화면 노출용. 위 둘과 무관 |
+
+- **디버깅 이력(중요)**: 처음엔 문자가 안 왔음 → `rf_notifications`에 `status=failed, error=발신번호 미등록`. 원인은 `SOLAPI_SENDER_PHONE`이 미등록 번호(구 010-5776-3325)였던 것. 솔라피 콘솔에 등록된 발신번호는 **010-7700-3324 하나뿐**(활성화·인증완료). → Vercel `SOLAPI_SENDER_PHONE`을 **010-7700-3324로 교체 + Redeploy** → **발송 성공 확인**(`status=sent`, 문자 도착).
+- 진단 SQL: `select created_at, kind, channel, recipient, status, error from rf_notifications order by created_at desc limit 10;`
+- ⚠️ **알림톡 vs 일반문자**: 예약(booking)은 카카오 **알림톡**(템플릿 필수, pfId로 발송 → 발신번호 등록과 무관). 상담은 **일반 문자(LMS, 템플릿 불필요)**. LMS/SMS는 **발신번호 등록이 필수**라 이번에 문제가 드러남.
+- ⚠️ **잔액**: 솔라피 총 잔액 **약 274원**(2026-07-21). LMS ~30-40원/건 × 상담 1건당 2번호 = ~60-80원. **운영 트래픽 전 충전 필수**(console.solapi.com → 결제 및 잔액). §16-2·§15와 동일 이슈.
+- Vercel 환경변수 변경 시 **반드시 Redeploy** 해야 함수에 반영됨(빈 커밋 `2abcfe2`로 재배포 트리거한 이력 있음). `.env.local`은 Vercel로 자동 동기화 안 됨(별도 등록).
+
+### 이번 세션 커밋 (main, 자동배포됨)
+| 커밋 | 내용 |
+|---|---|
+| `dcb10f4` | 후각발달훈련 리브랜딩 + 작업/언어/감통 제거 + 헤더 내비 정렬 |
+| `c7ba35e` | 설문(`/survey`) 탭 신설 + 짱샘 사진 교체 + 놀이팀 삭제 |
+| `b50edfa` | 전자책 50여권·전화번호 변경 + 사진 크롭 + 치료진→발달재활 전문가 + 통계/히어로 정리 |
+| `3ac2ca2` | 무료 상담 폼 실동작화(Supabase 저장 + 문자 알림, 다중 번호) |
+| `2abcfe2` | (빈 커밋) 환경변수 반영용 재배포 트리거 |
+
+### DB 마이그레이션 추가 (공유 Supabase `yvuekbmidwetaulasksk`)
+- `supabase/migrations/0005_survey.sql` → `rf_survey_responses` (설문)
+- `supabase/migrations/0006_consultations.sql` → `rf_consultations` (무료 상담)
+- 둘 다 RLS on + 공개정책 없음(서버 service_role 전용). **사용자가 SQL Editor에서 실행 완료.**
+
+### 상태 / 남은 것
+- 설문·무료상담 폼 **저장 + 문자 알림까지 전부 동작 확인 완료**(2026-07-21).
+- 남은 권장 작업: **솔라피 캐시 충전**(잔액 ~274원). 그 외 오픈 필수 아님.
