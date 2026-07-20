@@ -27,7 +27,7 @@ export default function AboutPage() {
                 <img
                   src={founder.photo}
                   alt={`${founder.name} ${founder.nick}`}
-                  className="mx-auto h-28 w-28 rounded-full object-cover shadow-sm ring-4 ring-brand-50"
+                  className="mx-auto h-28 w-28 rounded-full object-cover object-top shadow-sm ring-4 ring-brand-50"
                 />
               ) : (
                 <span className="mx-auto grid h-28 w-28 place-items-center rounded-full bg-brand-50 text-6xl">
@@ -98,7 +98,7 @@ export default function AboutPage() {
       {/* Stats */}
       <section className="pb-4">
         <div className="container-page">
-          <div className="grid grid-cols-2 gap-4 rounded-3xl bg-brand-600 p-8 text-white shadow-card lg:grid-cols-4">
+          <div className="grid grid-cols-3 gap-4 rounded-3xl bg-brand-600 p-8 text-white shadow-card">
             {stats.map((s) => (
               <div key={s.label} className="text-center">
                 <p className="font-display text-3xl font-extrabold sm:text-4xl">{s.value}</p>

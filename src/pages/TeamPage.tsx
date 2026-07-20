@@ -9,10 +9,10 @@ export default function TeamPage() {
         eyebrow="치료진 소개"
         title={
           <>
-            아이를 진심으로 대하는 <span className="text-brand-600">전문 치료진</span>
+            아이를 진심으로 대하는 <span className="text-brand-600">발달재활 전문가</span>
           </>
         }
-        desc="25년 임상의 센터장 짱샘과 분야별 전문 치료진이 한 팀이 되어 아이의 성장을 이끕니다."
+        desc="25년 임상의 발달재활 전문가 짱샘 장지예가 아이의 성장을 이끕니다."
         crumbs={[{ label: '치료진' }]}
       />
 
@@ -28,7 +28,7 @@ export default function TeamPage() {
                   <img
                     src={t.photo}
                     alt={`${t.name} ${t.role}`}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
                 ) : (

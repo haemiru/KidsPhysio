@@ -10,7 +10,7 @@ type Props = {
 /** 서브페이지 하단 공통 상담 유도 배너. */
 export default function CtaBand({
   title = '아이의 발달, 혼자 고민하지 마세요',
-  desc = '전문 치료진이 친절하게 안내해 드립니다. 무료 상담을 신청해 보세요.',
+  desc = '발달재활 전문가가 친절하게 안내해 드립니다. 무료 상담을 신청해 보세요.',
 }: Props) {
   return (
     <section className="py-16 lg:py-20">

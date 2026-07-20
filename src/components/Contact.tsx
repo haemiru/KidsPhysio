@@ -70,7 +70,7 @@ export default function Contact() {
                 가장 빠른 때입니다
               </h2>
               <p className="mt-4 max-w-md leading-relaxed text-white/80">
-                아이의 발달이 걱정된다면 편하게 문의해 주세요. 전문 치료진이
+                아이의 발달이 걱정된다면 편하게 문의해 주세요. 발달재활 전문가가
                 친절하게 안내해 드립니다.
               </p>
 

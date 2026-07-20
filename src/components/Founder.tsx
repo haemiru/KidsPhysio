@@ -15,7 +15,7 @@ export default function Founder() {
               <img
                 src={founder.photo}
                 alt={`${founder.name} ${founder.nick}`}
-                className="mx-auto h-28 w-28 rounded-full object-cover shadow-sm ring-4 ring-brand-50"
+                className="mx-auto h-28 w-28 rounded-full object-cover object-top shadow-sm ring-4 ring-brand-50"
               />
             ) : (
               <span className="mx-auto grid h-28 w-28 place-items-center rounded-full bg-brand-50 text-6xl">

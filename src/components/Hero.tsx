@@ -42,7 +42,7 @@ export default function Hero() {
 
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted lg:mx-0">
             25년 임상의 소아재활 전문가 <strong className="text-ink">짱샘</strong>이 1:1 맞춤
-            발달치료부터 발달 전자책 30여 권, 아이를 위한 후각발달훈련까지 —
+            발달치료부터 발달 전자책 50여 권, 아이를 위한 후각발달훈련까지 —
             <strong className="text-ink"> 근육보다 먼저 아이의 숨과 마음</strong>을 살핍니다.
           </p>
 
@@ -62,6 +62,8 @@ export default function Hero() {
               '1:1 맞춤 발달치료',
               '짱샘의 책방',
               '후각발달훈련',
+              '신경계 육아 코칭',
+              '브레인센트 코칭',
             ].map((t) => (
               <div key={t} className="flex items-center gap-2">
                 <span className="grid h-5 w-5 place-items-center rounded-full bg-brand-100 text-brand-700">
@@ -96,7 +98,7 @@ export default function Hero() {
             </span>
             <div>
               <p className="text-xs font-semibold text-muted">짱샘의 책방</p>
-              <p className="text-sm font-extrabold text-ink">발달 전자책 30여 권</p>
+              <p className="text-sm font-extrabold text-ink">발달 전자책 50여 권</p>
             </div>
           </div>
         </div>

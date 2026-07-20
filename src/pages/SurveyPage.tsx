@@ -122,7 +122,7 @@ export default function SurveyPage() {
             <div className="flex items-start gap-3 rounded-2xl border border-coral-200 bg-coral-50 p-4 text-[15px] text-coral-700">
               <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
               <span>
-                제출 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요. 계속 실패하면 010-5776-3325로 알려주세요.
+                제출 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요. 계속 실패하면 010-5686-4182로 알려주세요.
               </span>
             </div>
           )}

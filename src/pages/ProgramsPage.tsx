@@ -22,7 +22,7 @@ export default function ProgramsPage() {
             아이에게 꼭 맞는 <span className="text-brand-600">3가지 전문 영역</span>
           </>
         }
-        desc="발달 영역별 전문 치료진이 협력하여 아이에게 필요한 프로그램을 제안합니다. 궁금한 영역을 눌러 자세히 살펴보세요."
+        desc="발달재활 전문가가 발달 영역을 두루 살펴 아이에게 필요한 프로그램을 제안합니다. 궁금한 영역을 눌러 자세히 살펴보세요."
         crumbs={[{ label: '발달 프로그램' }]}
       />
 
