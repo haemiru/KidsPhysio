@@ -4,13 +4,13 @@ import SectionHeading from './SectionHeading'
 import Icon from './Icon'
 import { aromaIntro, aromaServices } from '../data/site'
 
-/** 아로마 테라피 — 홈 섹션 (소개 + 3가지 제공 형태). */
+/** 후각발달훈련 — 홈 섹션 (소개 + 3가지 제공 형태). */
 export default function Aroma() {
   return (
     <section id="aroma" className="py-20 lg:py-28">
       <div className="container-page">
         <SectionHeading
-          eyebrow="아로마 테라피"
+          eyebrow="후각발달훈련"
           title={
             <>
               향기는 <span className="text-brand-600">가장 빠른 길</span>로 뇌에 닿습니다
@@ -44,7 +44,7 @@ export default function Aroma() {
 
         <div className="mt-12 text-center">
           <Link to="/aroma" className="btn btn-primary text-base">
-            아로마 테라피 자세히 보기
+            후각발달훈련 자세히 보기
             <ArrowRight className="h-5 w-5" aria-hidden="true" />
           </Link>
         </div>

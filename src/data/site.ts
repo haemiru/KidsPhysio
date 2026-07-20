@@ -44,7 +44,7 @@ export const nav = [
   { label: '발달치료', to: '/programs' },
   { label: '코칭', to: '/coaching' },
   { label: '책방', to: '/bookshop' },
-  { label: '아로마', to: '/aroma' },
+  { label: '후각발달훈련', to: '/aroma' },
   { label: '치료진', to: '/team' },
   { label: '칼럼', to: '/blog' },
   { label: '오시는 길', to: '/contact' },
@@ -53,7 +53,7 @@ export const nav = [
 export const stats = [
   { value: '25년', label: '소아재활 임상 경력' },
   { value: '30+', label: '출간한 발달 전자책' },
-  { value: '6개 영역', label: '1:1 발달 치료' },
+  { value: '3개 영역', label: '1:1 발달 치료' },
   { value: '5종', label: '아로마·후각 케어 라인' },
 ] as const
 
@@ -68,36 +68,12 @@ export type Program = {
 
 export const programs: Program[] = [
   {
-    id: 'sensory',
-    icon: 'Sparkles',
-    title: '감각통합치료',
-    summary: '감각 정보를 조절하고 통합하는 힘을 길러 일상 적응력을 높입니다.',
-    points: ['감각 예민·둔감 조절', '대근육·평형감각 발달', '집중력과 자기조절'],
-    color: 'brand',
-  },
-  {
     id: 'physical',
     icon: 'Activity',
     title: '물리치료',
     summary: '운동 발달이 늦은 아이의 자세와 움직임을 전문적으로 돕습니다.',
     points: ['근력·균형 향상', '바른 자세·보행 훈련', '운동 발달 지연 개선'],
     color: 'sky',
-  },
-  {
-    id: 'occupational',
-    icon: 'Hand',
-    title: '작업치료',
-    summary: '소근육과 일상생활 기술을 키워 스스로 해내는 경험을 만듭니다.',
-    points: ['소근육·눈손 협응', '식사·옷입기 등 일상기술', '시지각·인지 발달'],
-    color: 'coral',
-  },
-  {
-    id: 'speech',
-    icon: 'MessageCircle',
-    title: '언어치료',
-    summary: '듣고 말하고 소통하는 즐거움으로 표현의 세계를 넓혀 줍니다.',
-    points: ['언어 이해·표현 향상', '조음·발음 교정', '상호작용·화용 언어'],
-    color: 'sun',
   },
   {
     id: 'breath',
@@ -209,18 +185,6 @@ export const team: Therapist[] = [
     photo: '/team/jjangsaem.jpg',
   },
   {
-    name: '감각통합·작업치료팀',
-    role: '작업치료사 · 감각통합 전문',
-    tags: ['감각통합(SI)', '소근육·일상기술'],
-    icon: '🧩',
-  },
-  {
-    name: '언어치료팀',
-    role: '언어재활사',
-    tags: ['언어 이해·표현', '조음·유창성'],
-    icon: '💬',
-  },
-  {
     name: '놀이·정서지원팀',
     role: '놀이심리상담사',
     tags: ['정서·사회성', '원시반사 통합 놀이'],
@@ -265,23 +229,6 @@ export type ProgramDetail = {
 }
 
 export const programDetails: Record<string, ProgramDetail> = {
-  sensory: {
-    intro:
-      '감각통합치료는 촉각·전정(균형)·고유수용성 감각 등 여러 감각 정보를 뇌가 효율적으로 조직화하도록 돕는 치료입니다. 놀이 기반 활동을 통해 아이가 자신의 몸과 환경을 더 잘 다루도록 이끕니다.',
-    image:
-      'https://images.unsplash.com/photo-1545048702-79362596cdc9?auto=format&fit=crop&w=1000&q=80',
-    forWhom: [
-      '소리·촉감·움직임에 지나치게 예민하거나 둔감한 아이',
-      '쉽게 산만하고 가만히 앉아 있기 어려운 아이',
-      '대근육 활동이나 균형 잡기를 어려워하는 아이',
-    ],
-    how: [
-      { title: '감각 프로파일 평가', desc: '아이의 감각 반응 특성을 표준화 도구로 파악합니다.' },
-      { title: '맞춤 감각 활동', desc: '그네·볼풀·균형판 등 전정·고유수용 활동을 단계적으로 제공합니다.' },
-      { title: '자기조절 훈련', desc: '스스로 각성 수준을 조절하는 전략을 놀이 속에서 익힙니다.' },
-    ],
-    outcomes: ['감각 예민·둔감 완화', '집중력·자기조절 향상', '일상 적응력 증진'],
-  },
   physical: {
     intro:
       '소아물리치료는 운동 발달이 또래보다 늦거나 자세·움직임에 어려움이 있는 아이를 돕습니다. 근력과 균형, 협응 능력을 키워 바르게 서고 걷고 움직이도록 합니다.',
@@ -298,40 +245,6 @@ export const programDetails: Record<string, ProgramDetail> = {
       { title: '보행·자세 교정', desc: '바른 움직임 패턴을 반복 학습합니다.' },
     ],
     outcomes: ['근력·균형 향상', '바른 자세·보행', '운동 발달 지연 개선'],
-  },
-  occupational: {
-    intro:
-      '작업치료는 소근육과 눈손 협응, 일상생활 기술을 길러 아이가 스스로 해내는 경험을 쌓도록 돕습니다. 식사·옷입기·쓰기 같은 실제 생활 과제를 중심으로 진행합니다.',
-    image:
-      'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1000&q=80',
-    forWhom: [
-      '손 사용이 서툴거나 글씨·가위질을 어려워하는 아이',
-      '식사·옷입기 등 자조 기술이 더딘 아이',
-      '시지각·인지 발달 지원이 필요한 아이',
-    ],
-    how: [
-      { title: '기능 평가', desc: '소근육·시지각·일상생활 수행 수준을 평가합니다.' },
-      { title: '소근육 활동', desc: '조작 놀이와 도구 활동으로 손 기능을 발달시킵니다.' },
-      { title: '일상기술 훈련', desc: '실제 생활 과제를 단계별로 연습합니다.' },
-    ],
-    outcomes: ['소근육·눈손 협응', '자조 기술 향상', '시지각·인지 발달'],
-  },
-  speech: {
-    intro:
-      '언어치료는 듣고 이해하고 표현하며 소통하는 힘을 키웁니다. 아이의 언어 수준에 맞춰 놀이와 상호작용 속에서 자연스럽게 언어를 끌어냅니다.',
-    image:
-      'https://images.unsplash.com/photo-1597413545419-4013431dbfec?auto=format&fit=crop&w=1000&q=80',
-    forWhom: [
-      '말이 늦거나 어휘가 부족한 아이',
-      '발음이 부정확한 아이',
-      '대화·상호작용을 어려워하는 아이',
-    ],
-    how: [
-      { title: '언어 평가', desc: '수용·표현 언어와 조음 능력을 진단합니다.' },
-      { title: '표현 언어 확장', desc: '놀이 중심으로 어휘와 문장을 늘려갑니다.' },
-      { title: '조음·화용 훈련', desc: '발음 교정과 상황에 맞는 언어 사용을 연습합니다.' },
-    ],
-    outcomes: ['언어 이해·표현 향상', '조음·발음 교정', '상호작용 능력 증진'],
   },
   breath: {
     intro:
@@ -465,7 +378,7 @@ export const books: Book[] = [
 /* ── 아로마 테라피 ── */
 export const aromaIntro = {
   lead: '향기는 코를 지나 가장 빠르게 뇌에 닿습니다.',
-  body: '짱샘의 아로마 테라피는 단순한 좋은 향이 아니라, 아이의 자율신경계 안정과 후각 발달을 위해 설계된 케어입니다. 검증된 에센셜 오일·하이드로졸과 후각 훈련법으로, 가정에서도 안전하게 아이의 숨과 잠을 돌볼 수 있도록 돕습니다.',
+  body: '짱샘의 후각발달훈련은 단순한 좋은 향이 아니라, 아이의 자율신경계 안정과 후각 발달을 위해 설계된 케어입니다. 검증된 에센셜 오일·하이드로졸과 후각 훈련법으로, 가정에서도 안전하게 아이의 숨과 잠을 돌볼 수 있도록 돕습니다.',
 }
 
 export type AromaService = {
@@ -539,7 +452,7 @@ export const values = [
 export const history = [
   { year: '임상 초기', text: '소아 물리치료사로 수많은 아이들을 만나며 ‘호흡’의 중요성을 발견' },
   { year: '연구', text: '후각·자율신경계 연구를 접목한 호흡·후각 통합 접근 정립' },
-  { year: '키즈피지오', text: '강남 키즈피지오 아동발달센터 운영, 6개 영역 1:1 발달 치료' },
+  { year: '키즈피지오', text: '강남 키즈피지오 아동발달센터 운영, 3개 영역 1:1 발달 치료' },
   { year: '피지오 후각 연구소', text: '후각 키트·아로마 케어와 후각 발달 프로그램 개발' },
   { year: '짱샘의 책방', text: '발달·호흡·후각·수면·치유 전자책 30여 권 출간' },
 ]

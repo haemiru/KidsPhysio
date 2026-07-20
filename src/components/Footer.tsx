@@ -29,8 +29,8 @@ export default function Footer() {
         <div>
           <Logo light />
           <p className="mt-4 max-w-xs text-sm leading-relaxed">
-            25년 임상의 소아재활 전문가 짱샘과 함께. 발달치료부터 책방, 아로마
-            테라피까지 — 근육보다 먼저 아이의 숨과 마음을 살핍니다.
+            25년 임상의 소아재활 전문가 짱샘과 함께. 발달치료부터 책방,
+            후각발달훈련까지 — 근육보다 먼저 아이의 숨과 마음을 살핍니다.
           </p>
           <a
             href={site.bookshop}

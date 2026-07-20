@@ -8,14 +8,14 @@ export default function AromaPage() {
   return (
     <>
       <PageHero
-        eyebrow="아로마 테라피"
+        eyebrow="후각발달훈련"
         title={
           <>
             아이의 숨을 돌보는 <span className="text-brand-600">향기</span>
           </>
         }
         desc={aromaIntro.lead}
-        crumbs={[{ label: '아로마 테라피' }]}
+        crumbs={[{ label: '후각발달훈련' }]}
       />
 
       {/* Intro */}
