@@ -103,6 +103,9 @@
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
     letter-spacing: -0.01em;
+    /* 한글 단어(어절)가 줄 끝에서 잘리지 않도록. 긴 URL·영문은 예외적으로 분리 */
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
 
   h1,

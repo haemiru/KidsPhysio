@@ -6,10 +6,11 @@ export default function Team() {
     <section id="team" className="bg-sand/60 py-20 lg:py-28">
       <div className="container-page">
         <SectionHeading
-          eyebrow="치료진 소개"
+          eyebrow="소개"
           title={
             <>
-              아이를 진심으로 대하는 <span className="text-brand-600">발달재활 전문가</span>
+              <span className="block">아이를 진심으로 대하는</span>
+              <span className="block text-brand-600">발달재활 전문가</span>
             </>
           }
         />

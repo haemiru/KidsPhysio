@@ -6,10 +6,11 @@ export default function TeamPage() {
   return (
     <>
       <PageHero
-        eyebrow="치료진 소개"
+        eyebrow="소개"
         title={
           <>
-            아이를 진심으로 대하는 <span className="text-brand-600">발달재활 전문가</span>
+            <span className="block">아이를 진심으로 대하는</span>
+            <span className="block text-brand-600">발달재활 전문가</span>
           </>
         }
         desc="25년 임상의 발달재활 전문가 짱샘 장지예가 아이의 성장을 이끕니다."

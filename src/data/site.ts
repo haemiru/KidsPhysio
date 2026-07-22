@@ -71,7 +71,7 @@ export const programs: Program[] = [
   {
     id: 'physical',
     icon: 'Activity',
-    title: '물리치료',
+    title: '운동재활',
     summary: '운동 발달이 늦은 아이의 자세와 움직임을 전문적으로 돕습니다.',
     points: ['근력·균형 향상', '바른 자세·보행 훈련', '운동 발달 지연 개선'],
     color: 'sky',
@@ -386,7 +386,7 @@ export type AromaService = {
 export const aromaServices: AromaService[] = [
   {
     icon: 'Flower2',
-    title: '아로마 제품',
+    title: '후각 훈련 제품',
     desc: '아이에게 안전한 농도로 준비한 에센셜 오일·하이드로졸과 후각 키트를 소개·제공합니다.',
     points: ['아동 안전 농도 블렌딩', '용도별 향기 큐레이션', '후각 키트·노즈워터 재료'],
   },
