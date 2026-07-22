@@ -31,7 +31,8 @@ export default function Header() {
           : 'bg-transparent'
       }`}
     >
-      <div className="container-page flex h-[4.5rem] items-center justify-between">
+      {/* 헤더는 본문(76rem)보다 살짝 넓은 컨테이너를 써서 메뉴가 늘어나도 로고·전화번호가 접히지 않게 한다 */}
+      <div className="mx-auto flex h-[4.5rem] w-full max-w-[86rem] items-center justify-between px-5">
         <Logo />
 
         {/* Desktop nav */}
@@ -41,7 +42,7 @@ export default function Header() {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `whitespace-nowrap rounded-full px-3 py-2 text-[15px] font-semibold transition-colors ${
+                `whitespace-nowrap rounded-full px-2.5 py-2 text-[15px] font-semibold transition-colors ${
                   isActive
                     ? 'bg-brand-50 text-brand-700'
                     : 'text-ink/80 hover:bg-brand-50 hover:text-brand-700'
@@ -56,7 +57,7 @@ export default function Header() {
         <div className="hidden items-center gap-2.5 xl:flex">
           <a
             href={site.phoneHref}
-            className="inline-flex items-center gap-2 text-sm font-bold text-brand-700"
+            className="inline-flex items-center gap-2 whitespace-nowrap text-sm font-bold text-brand-700"
           >
             <Phone className="h-4 w-4" strokeWidth={2.4} aria-hidden="true" />
             {site.phone}

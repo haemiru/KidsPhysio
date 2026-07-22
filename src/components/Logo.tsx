@@ -6,7 +6,7 @@ export default function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link
       to="/"
-      className="group inline-flex items-center gap-2.5"
+      className="group inline-flex shrink-0 items-center gap-2.5"
       aria-label={`${site.fullName} 홈으로`}
     >
       <span className="grid h-10 w-10 place-items-center rounded-2xl bg-brand-500 shadow-soft transition-transform duration-200 group-hover:-translate-y-0.5">
@@ -18,7 +18,7 @@ export default function Logo({ light = false }: { light?: boolean }) {
           <circle cx="32" cy="18" r="4" fill="#FFD25E" />
         </svg>
       </span>
-      <span className="flex flex-col leading-none">
+      <span className="flex flex-col whitespace-nowrap leading-none">
         <span
           className={`font-display text-xl font-extrabold tracking-tight ${
             light ? 'text-white' : 'text-ink'
