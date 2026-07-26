@@ -46,6 +46,7 @@ export const nav = [
   { label: '책방', to: '/bookshop' },
   { label: '후각발달훈련', to: '/aroma' },
   { label: '클래스', to: '/class' },
+  { label: '몸읽기', to: '/project' },
   { label: '치료진', to: '/team' },
   { label: '칼럼', to: '/blog' },
   { label: '설문', to: '/survey' },

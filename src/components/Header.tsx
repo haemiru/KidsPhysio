@@ -36,13 +36,14 @@ export default function Header() {
         <Logo />
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-0.5 xl:flex" aria-label="주요 메뉴">
+        {/* 메뉴가 11개라 xl(1280px)에서 여유가 빠듯하다 — 항목 간격·좌우 패딩을 최소로 유지할 것 */}
+        <nav className="hidden items-center xl:flex" aria-label="주요 메뉴">
           {nav.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `whitespace-nowrap rounded-full px-2.5 py-2 text-[15px] font-semibold transition-colors ${
+                `whitespace-nowrap rounded-full px-2 py-2 text-[15px] font-semibold transition-colors ${
                   isActive
                     ? 'bg-brand-50 text-brand-700'
                     : 'text-ink/80 hover:bg-brand-50 hover:text-brand-700'

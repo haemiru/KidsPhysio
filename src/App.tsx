@@ -11,6 +11,7 @@ import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
 import ClassApplyPage from './pages/ClassApplyPage'
+import ProjectApplyPage from './pages/ProjectApplyPage'
 import SurveyPage from './pages/SurveyPage'
 import NotFound from './pages/NotFound'
 
@@ -40,6 +41,7 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="/class" element={<ClassApplyPage />} />
+        <Route path="/project" element={<ProjectApplyPage />} />
         <Route path="/survey" element={<SurveyPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFound />} />
