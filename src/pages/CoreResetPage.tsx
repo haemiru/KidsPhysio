@@ -276,11 +276,23 @@ export default function CoreResetPage() {
               1. 안내
             </h2>
             <p className="mt-4 text-[15px] font-bold text-ink">{coreResetIntro.greeting}</p>
-            {coreResetIntro.body.map((p) => (
-              <p key={p} className="mt-2 text-[15px] leading-relaxed text-muted">
-                {p}
-              </p>
-            ))}
+            <ul className="mt-3 space-y-3">
+              {coreResetIntro.body.map((item) => (
+                <li key={item.text} className="flex items-start gap-2.5">
+                  <Check
+                    className="mt-1 h-4 w-4 shrink-0 text-brand-600"
+                    strokeWidth={3}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <p className="text-[15px] leading-relaxed text-ink">{item.text}</p>
+                    {item.sub && (
+                      <p className="mt-1 text-[14px] leading-relaxed text-muted">({item.sub})</p>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
             <p className="mt-4 rounded-2xl bg-sand/60 px-5 py-4 text-[14px] leading-relaxed text-muted">
               ※ {coreResetIntro.notice}
             </p>
