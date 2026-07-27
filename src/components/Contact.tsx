@@ -85,7 +85,7 @@ export default function Contact() {
                 className="pointer-events-none absolute right-0 top-0 h-48 w-48 animate-blob bg-white/10"
               />
               <span className="inline-flex rounded-full bg-white/15 px-3.5 py-1.5 text-sm font-bold">
-                무료 상담 예약
+                브레인 코칭
               </span>
               <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
                 망설이는 지금이
@@ -129,7 +129,7 @@ export default function Contact() {
                 <div className="flex h-full flex-col items-center justify-center text-center">
                   <CheckCircle2 className="h-16 w-16 text-brand-500" aria-hidden="true" />
                   <h3 className="mt-5 text-2xl font-extrabold text-ink">
-                    상담 신청이 접수되었어요!
+                    브레인 코칭 신청이 접수되었어요!
                   </h3>
                   <p className="mt-3 max-w-xs text-muted">
                     빠른 시일 내에 담당 선생님이 연락드리겠습니다. 감사합니다. 😊
@@ -144,7 +144,7 @@ export default function Contact() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
-                  <h3 className="text-2xl font-extrabold text-ink">상담 신청서</h3>
+                  <h3 className="text-2xl font-extrabold text-ink">브레인 코칭 신청서</h3>
                   {/* 봇 차단용 허니팟 — 사용자에게 보이지 않음 */}
                   <input
                     type="text"
@@ -238,7 +238,7 @@ export default function Contact() {
                     disabled={submitting}
                     className="btn btn-primary w-full text-base disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    {submitting ? '신청 중…' : '무료 상담 신청하기'}
+                    {submitting ? '신청 중…' : '브레인 코칭 신청하기'}
                   </button>
                 </form>
               )}

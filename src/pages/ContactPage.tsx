@@ -16,7 +16,7 @@ export default function ContactPage() {
             언제든 <span className="text-brand-600">편하게 찾아오세요</span>
           </>
         }
-        desc="전화 또는 상담 신청서로 문의해 주시면 친절히 안내해 드립니다."
+        desc="전화 또는 브레인 코칭 신청서로 문의해 주시면 친절히 안내해 드립니다."
         crumbs={[{ label: '오시는 길' }]}
       />
 

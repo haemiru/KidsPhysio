@@ -48,7 +48,7 @@ export default function Hero() {
 
           <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:items-start lg:justify-start">
             <a href="#contact" className="btn btn-primary w-full text-base sm:w-auto">
-              무료 발달 상담 예약
+              브레인 코칭
               <ArrowRight className="h-5 w-5" aria-hidden="true" />
             </a>
             <a href={site.phoneHref} className="btn btn-ghost w-full text-base sm:w-auto">

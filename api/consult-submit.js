@@ -68,7 +68,7 @@ export default async function handler(req, res) {
       }).format(new Date())
 
       const smsText =
-        `[짱샘 키즈피지오] 새 무료상담 신청\n\n` +
+        `[짱샘 키즈피지오] 새 브레인 코칭 신청\n\n` +
         `보호자: ${name}\n` +
         `연락처: ${phoneFmt}\n` +
         (childAge ? `아이나이: ${childAge}\n` : '') +
@@ -77,7 +77,7 @@ export default async function handler(req, res) {
 
       await Promise.all(
         hosts.map((h) =>
-          sendSms({ to: h, subject: '새 무료상담 신청', text: smsText, kind: 'consultation' }).catch((e) =>
+          sendSms({ to: h, subject: '새 브레인 코칭 신청', text: smsText, kind: 'consultation' }).catch((e) =>
             console.error('[consult-submit] sms error:', e),
           ),
         ),

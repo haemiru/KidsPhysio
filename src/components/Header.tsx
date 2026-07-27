@@ -67,7 +67,7 @@ export default function Header() {
             4주 코칭
           </Link>
           <Link to="/contact" className="btn btn-primary whitespace-nowrap px-4 py-2.5 text-[15px]">
-            무료 상담 예약
+            브레인 코칭
           </Link>
         </div>
 
@@ -113,7 +113,7 @@ export default function Header() {
               onClick={() => setOpen(false)}
               className="btn btn-primary mt-1"
             >
-              무료 상담 예약
+              브레인 코칭
             </Link>
             <a
               href={site.phoneHref}
