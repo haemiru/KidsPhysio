@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
-import { Menu, X, Phone } from 'lucide-react'
+import { NavLink, Link, useLocation } from 'react-router-dom'
+import { Menu, X, Phone, ChevronDown } from 'lucide-react'
 import Logo from './Logo'
-import { nav, site } from '../data/site'
+import { nav, site, type NavLink as NavLinkItem } from '../data/site'
+
+const itemCls = (isActive: boolean) =>
+  `whitespace-nowrap rounded-full px-2 py-2 text-[15px] font-semibold transition-colors ${
+    isActive ? 'bg-brand-50 text-brand-700' : 'text-ink/80 hover:bg-brand-50 hover:text-brand-700'
+  }`
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -38,21 +44,20 @@ export default function Header() {
         {/* Desktop nav */}
         {/* 메뉴가 11개라 xl(1280px)에서 여유가 빠듯하다 — 항목 간격·좌우 패딩을 최소로 유지할 것 */}
         <nav className="hidden items-center xl:flex" aria-label="주요 메뉴">
-          {nav.map((item) => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              className={({ isActive }) =>
-                `whitespace-nowrap rounded-full px-2 py-2 text-[15px] font-semibold transition-colors ${
-                  isActive
-                    ? 'bg-brand-50 text-brand-700'
-                    : 'text-ink/80 hover:bg-brand-50 hover:text-brand-700'
-                }`
-              }
-            >
-              {item.label}
-            </NavLink>
-          ))}
+          {nav.map((item) =>
+            'to' in item ? (
+              <NavLink key={item.to} to={item.to} className={({ isActive }) => itemCls(isActive)}>
+                {item.label}
+              </NavLink>
+            ) : (
+              <NavDropdown
+                key={item.label}
+                label={item.label}
+                items={item.children}
+                pathname={pathname}
+              />
+            ),
+          )}
         </nav>
 
         <div className="hidden items-center gap-2.5 xl:flex">
@@ -87,20 +92,25 @@ export default function Header() {
       {open && (
         <div className="border-t border-brand-100/70 bg-cream xl:hidden">
           <nav className="container-page flex flex-col gap-1 py-4" aria-label="모바일 메뉴">
-            {nav.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `rounded-xl px-4 py-3 text-base font-semibold ${
-                    isActive ? 'bg-brand-50 text-brand-700' : 'text-ink/90 hover:bg-brand-50'
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
+            {nav.map((item) =>
+              'to' in item ? (
+                <MobileLink key={item.to} item={item} onNavigate={() => setOpen(false)} />
+              ) : (
+                /* 하위 메뉴는 그룹 제목 아래 들여쓰기로 펼쳐 둔다 (모바일에선 접지 않음) */
+                <div key={item.label} className="mt-1">
+                  <p className="px-4 pb-1 pt-2 text-sm font-bold text-muted">{item.label}</p>
+                  <div className="flex flex-col gap-1 border-l-2 border-brand-100 pl-3">
+                    {item.children.map((child) => (
+                      <MobileLink
+                        key={child.to}
+                        item={child}
+                        onNavigate={() => setOpen(false)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ),
+            )}
             <Link
               to="/coaching"
               onClick={() => setOpen(false)}
@@ -125,5 +135,71 @@ export default function Header() {
         </div>
       )}
     </header>
+  )
+}
+
+/**
+ * 데스크톱 드롭다운 메뉴.
+ * 마우스는 hover, 키보드는 focus-within 으로 열린다 (상태 없이 CSS로만 제어).
+ */
+function NavDropdown({
+  label,
+  items,
+  pathname,
+}: {
+  label: string
+  items: NavLinkItem[]
+  pathname: string
+}) {
+  const active = items.some((i) => pathname === i.to || pathname.startsWith(`${i.to}/`))
+
+  return (
+    <div className="group relative">
+      <button type="button" className={`${itemCls(active)} inline-flex items-center gap-0.5`}>
+        {label}
+        <ChevronDown
+          className="h-4 w-4 transition-transform group-hover:rotate-180"
+          aria-hidden="true"
+        />
+      </button>
+
+      {/* pt-2 는 버튼과 패널 사이 마우스 이동 시 hover 가 끊기지 않게 하는 여백 */}
+      <div className="pointer-events-none absolute left-1/2 top-full z-10 -translate-x-1/2 pt-2 opacity-0 transition-opacity group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100">
+        <ul className="min-w-[11rem] rounded-2xl border border-brand-100 bg-white p-1.5 shadow-card">
+          {items.map((item) => (
+            <li key={item.to}>
+              <NavLink
+                to={item.to}
+                className={({ isActive }) =>
+                  `block whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[15px] font-semibold transition-colors ${
+                    isActive
+                      ? 'bg-brand-50 text-brand-700'
+                      : 'text-ink/80 hover:bg-brand-50 hover:text-brand-700'
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+function MobileLink({ item, onNavigate }: { item: NavLinkItem; onNavigate: () => void }) {
+  return (
+    <NavLink
+      to={item.to}
+      onClick={onNavigate}
+      className={({ isActive }) =>
+        `rounded-xl px-4 py-3 text-base font-semibold ${
+          isActive ? 'bg-brand-50 text-brand-700' : 'text-ink/90 hover:bg-brand-50'
+        }`
+      }
+    >
+      {item.label}
+    </NavLink>
   )
 }

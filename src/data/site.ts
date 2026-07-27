@@ -39,19 +39,37 @@ export const business = {
   email: 'ybongee@naver.com',
 } as const
 
-export const nav = [
+export type NavLink = { label: string; to: string }
+/** 하위 메뉴가 있으면 헤더에서 드롭다운으로 열린다 */
+export type NavItem = NavLink | { label: string; children: NavLink[] }
+
+/**
+ * 헤더 메뉴.
+ * ⚠️ 데스크톱 헤더 가로 여유가 빠듯하다(§19-E). 최상위 항목을 늘리기보다
+ *    성격이 같은 페이지는 children 으로 묶을 것.
+ */
+export const nav: NavItem[] = [
   { label: '센터소개', to: '/about' },
   { label: '발달치료', to: '/programs' },
   { label: '코칭', to: '/coaching' },
   { label: '책방', to: '/bookshop' },
   { label: '후각발달훈련', to: '/aroma' },
   { label: '클래스', to: '/class' },
-  { label: '몸읽기', to: '/project' },
+  {
+    label: '신청서',
+    children: [
+      { label: '몸읽기 신청서', to: '/project' },
+      { label: '코어 리셋 신청서', to: '/core-reset' },
+    ],
+  },
   { label: '치료진', to: '/team' },
   { label: '칼럼', to: '/blog' },
   { label: '설문', to: '/survey' },
   { label: '오시는 길', to: '/contact' },
-] as const
+]
+
+/** 푸터 바로가기처럼 평면 목록이 필요한 곳에서 사용 */
+export const navLinks: NavLink[] = nav.flatMap((n) => ('to' in n ? [n] : n.children))
 
 export const stats = [
   { value: '25년', label: '소아재활 임상 경력' },

@@ -12,6 +12,7 @@ import BlogPostPage from './pages/BlogPostPage'
 import ContactPage from './pages/ContactPage'
 import ClassApplyPage from './pages/ClassApplyPage'
 import ProjectApplyPage from './pages/ProjectApplyPage'
+import CoreResetPage from './pages/CoreResetPage'
 import SurveyPage from './pages/SurveyPage'
 import NotFound from './pages/NotFound'
 
@@ -42,6 +43,7 @@ function App() {
         <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="/class" element={<ClassApplyPage />} />
         <Route path="/project" element={<ProjectApplyPage />} />
+        <Route path="/core-reset" element={<CoreResetPage />} />
         <Route path="/survey" element={<SurveyPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFound />} />

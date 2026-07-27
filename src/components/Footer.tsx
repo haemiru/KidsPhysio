@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import Logo from './Logo'
-import { business, nav, site } from '../data/site'
+import { business, navLinks, site } from '../data/site'
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
@@ -63,7 +63,7 @@ export default function Footer() {
             바로가기
           </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {nav.map((n) => (
+            {navLinks.map((n) => (
               <li key={n.to}>
                 <Link to={n.to} className="transition hover:text-white">
                   {n.label}
