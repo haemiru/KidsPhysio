@@ -1,15 +1,22 @@
-# 코칭 예약 시스템 통합 — 작업 인수인계 문서
+# 짱샘 키즈피지오 — 작업 인수인계 문서
 
-> KidsPhysio(짱샘 키즈피지오) 사이트에 **regist-form 예약 시스템**을 이식한 작업 기록.
+> KidsPhysio(짱샘 키즈피지오) 사이트 작업 기록.
+> 처음엔 **regist-form 예약 시스템 이식**(§0~§16) 기록이었고, 이후 **메인 사이트 개편 + 신청/설문 폼 5종**(§17~§22)까지 누적됐습니다.
 > 다시 돌아와 이어서 작업할 때 이 문서부터 읽으면 됩니다.
-> 최초 작성: 2026-06-04 · **최종 갱신: 2026-07-21** · 최종 커밋: `2abcfe2` (main)
+> 최초 작성: 2026-06-04 · **최종 갱신: 2026-07-27** · 최종 커밋: `07e4012` (main)
 >
-> **⏭️ 예약 시스템(booking)**: 오픈 전 남은 건 실브라우저 end-to-end 검증 1회(신청→슬롯Hold→무통장 결제→알림톡 발송)뿐. 상세는 맨 아래 "⏭️ 다음에 돌아오면 곧바로 할 일".
-> **🆕 2026-07 세션(§17)**: 예약과 별개로 **메인 사이트 콘텐츠·브랜딩 개편 + 설문(`/survey`)·무료상담 폼(`/contact`) 백엔드** 신규 구축·배포. 저장 + 문자 알림까지 동작 확인 완료. **상세는 맨 아래 §17.**
+> ### 🔖 다시 돌아왔다면 **§23(맨 마지막)부터** 읽으세요
+> §23 = 현재 상태 한 장 요약 + 다음에 이어서 할 일 + 반복되는 함정 모음.
+> 그 위 §0~§22 는 **시간순 작업 로그**라 오래된 내용이 섞여 있습니다(개별 섹션의 "남은 것"은 이후 섹션에서 해소된 경우가 많음 → **§23 이 최신 진실**).
+>
+> - **§0~§16 예약 시스템(booking)** — 오픈 전 남은 건 실브라우저 end-to-end 검증 1회뿐.
+> - **§17~§22 메인 사이트** — 콘텐츠 개편 + **신청/설문 폼 5종** 구축·배포.
 
 ---
 
 ## 0. 한 줄 요약
+
+> ⚠️ 아래 §0~§22 의 날짜·"남은 것"은 **작성 시점 기준**이다. 최신 상태는 **§23** 참고.
 
 별도 저장소였던 **브레인센트 코어 리셋 코칭 예약 시스템**(`regist-form`, JS)을
 KidsPhysio(React+TS+Vite) 안으로 **TypeScript로 변환해 통합**했고, 원본 폴더는 삭제했다.
@@ -96,6 +103,16 @@ KidsPhysio/
 | `/my` | MyReservation | `?t=토큰` 또는 연락처→카톡 조회링크 |
 | `/privacy` | Privacy | 개인정보 처리방침(초안) |
 | `/admin/*` | AdminApp | 관리자(로그인 가드 + rf_admins 화이트리스트) |
+
+**메인 사이트(`Layout` 안)의 폼 라우트** — 2026-07 세션에서 추가됨. 상세 §23-B.
+
+| 경로 | 페이지 | 추가 |
+|---|---|---|
+| `/contact` | ContactPage + `Contact.tsx` 폼 | §17 (브레인 코칭) |
+| `/survey` | SurveyPage | §17 |
+| `/class` | ClassApplyPage | §18 |
+| `/project` | ProjectApplyPage | §19 |
+| `/core-reset` | CoreResetPage | §20 |
 
 > ⚠️ 라우트는 원본과 동일한 **절대경로**로 유지했다. 코드 곳곳에서 `navigate('/apply')`, `successUrl=.../payment/success`, 매직링크 `/my?t=` 등 절대경로에 의존하므로 base를 바꾸려면 서버 함수·DB·토스 설정까지 함께 손봐야 한다.
 
@@ -553,7 +570,7 @@ RPC: `rf_is_admin()`(RLS용), `rf_submit_application(jsonb)`(동의검증+삽입
 ### G. 확인한 것 / 남은 것
 - ✅ `tsc -b` + `vite build` + eslint 통과, 브라우저에서 렌더·기타직접입력 토글·필수검증(4개 항목 오류 표시)·헤더 1줄 정렬 확인.
 - ⚠️ **남은 필수 작업 2가지**
-  1. **`supabase/migrations/0007_class_applications.sql`을 Supabase SQL Editor에서 실행** (0005·0006과 동일한 수기 절차). 실행 전에는 제출 시 `INSERT_FAILED`.
+  1. ~~`supabase/migrations/0007_class_applications.sql`을 Supabase SQL Editor에서 실행~~ → **실행 완료**(2026-07-27 테이블 존재 확인, 누적 6건).
   2. main push → 자동배포. `/api/*`는 Vercel 함수라 **로컬 dev(`npm run dev`)에서는 제출이 동작하지 않음** — 배포본에서 실제 제출 1건으로 저장·문자 확인 필요.
 - 알림 문자는 §17-D의 `HOST_NOTIFY_PHONE`·`SOLAPI_SENDER_PHONE`을 그대로 사용(추가 환경변수 없음). **솔라피 잔액 부족 시 문자만 실패하고 신청 저장은 성공** — 잔액 확인 필요(§17-D).
 - 응답 확인: Supabase Table Editor → `rf_class_applications`(신청), `rf_notifications`(발송 로그, channel=sms·kind=`class_application`).
@@ -734,3 +751,88 @@ RPC: `rf_is_admin()`(RLS용), `rf_submit_application(jsonb)`(동의검증+삽입
 - 신청서 §11 과 **제출 완료 화면 양쪽**에서 수동 문자 안내·체크리스트 제거. 완료 화면에는 “신청 내용이 담당자에게 전달되었습니다.” 를 추가해 자동 발송을 명시.
 - **`HOST_NOTIFY_PHONE` 에 `010-5686-4182` 가 포함되어 있음을 확인**(다른 번호 1개와 함께 등록). 즉 신청 버튼 = 짱샘 폰으로 문자 발송.
 - 📌 담당자 번호를 바꾸려면 **코드가 아니라 Vercel 환경변수 `HOST_NOTIFY_PHONE`** 을 수정한다(콤마로 여러 번호 지정 가능). 5종 폼이 모두 이 값을 공유한다.
+
+---
+---
+
+# 23. 📌 현재 상태 & 다음에 이어서 할 일 (2026-07-27 기준)
+
+> **여기가 최신 진실이다.** 위 §0~§22 는 시간순 로그라 개별 섹션의 "남은 것"이 이후에 해소된 경우가 많다.
+> 다시 돌아왔다면 이 섹션만 읽고 바로 작업을 이어가면 된다.
+
+## A. 한 장 요약
+
+- **사이트**: kidsphysio.kr (React 19 + TS + Vite, Vercel 자동배포 / `main` push = 배포)
+- **백엔드**: Supabase(공유 프로젝트 `yvuekbmidwetaulasksk`) + Vercel 서버리스 `api/*` + 솔라피(문자·알림톡)
+- **두 갈래 시스템**
+  1. **예약 시스템(booking)** — `/coaching` 이하. 유료 4주 코칭. 결제·슬롯·알림톡까지 구현 완료, **오픈 전 실브라우저 e2e 1회만 남음**.
+  2. **메인 사이트 폼 5종** — 아래 B. 전부 배포 완료.
+- **최종 커밋**: `07e4012`
+
+## B. 폼 5종 — 경로 · 파일 · 테이블 · 문자
+
+| 경로 | 이름 | 데이터 스키마 | 페이지 | API | 테이블 | 문자 `kind` |
+|---|---|---|---|---|---|---|
+| `/contact` | 브레인 코칭(무료 문의) | — (폼이 하드코딩) | `components/Contact.tsx` | `api/consult-submit.js` | `rf_consultations` | `consultation` |
+| `/survey` | 브레인센트 종료 설문 | `data/survey.ts` | `pages/SurveyPage.tsx` | `api/survey-submit.js` | `rf_survey_responses` | — |
+| `/class` | 후각키트 만들기 클래스 | `data/classApply.ts` | `pages/ClassApplyPage.tsx` | `api/class-apply.js` | `rf_class_applications` | `class_application` |
+| `/project` | 4주 몸읽기 프로젝트 | `data/bodyProject.ts` | `pages/ProjectApplyPage.tsx` | `api/project-apply.js` | `rf_project_applications` | `project_application` |
+| `/core-reset` | 코어 리셋 코칭 | `data/coreReset.ts` | `pages/CoreResetPage.tsx` | `api/core-reset-apply.js` | `rf_core_reset_applications` | `core_reset_application` |
+
+**공통 패턴** (새 폼을 만들 때 그대로 따라가면 된다 — §18~§20이 전부 이 구조):
+```
+src/data/<폼>.ts        문항 스키마 + 안내 문구 + 동의 문구   ← 문구 수정은 여기만
+src/pages/<폼>Page.tsx  스키마를 읽어 렌더 + 검증 + 제출
+api/<폼>-apply.js       허니팟 차단 → 서버 재검증 → Supabase insert → 사장님 LMS
+supabase/migrations/…   RLS on + 공개정책 없음(service_role 전용)
+src/App.tsx             라우트 추가
+src/data/site.ts        nav 에 추가 (⚠️ 최상위 말고 '신청서' children 으로!)
+```
+
+**테이블 실재 확인 (2026-07-27, service_role 조회)**
+`rf_consultations` 4건 · `rf_survey_responses` 1건 · `rf_class_applications` 6건 · `rf_project_applications` 0건 · `rf_core_reset_applications` 0건
+→ **마이그레이션 0005~0009 전부 실행 완료.** 뒤 두 개가 0건인 건 아직 실제 신청이 없어서다(아래 C-1).
+
+## C. 다음에 할 일
+
+### 1. ⚠️ 최우선 — 신규 폼 2종 실제 제출 검증
+`/project`·`/core-reset` 은 **누적 0건**이라 실제 저장·문자 발송이 한 번도 확인되지 않았다.
+배포본에서 각각 1건씩 넣고 확인:
+- Supabase Table Editor → 해당 테이블에 row 생성되는지
+- `rf_notifications` (channel=`sms`, kind=위 표) 에 `sent` 로 기록되는지 / 사장님 폰 수신
+- ❗ `npm run dev`(로컬)에서는 `/api/*` 가 Vercel 함수라 **동작하지 않는다.** 로컬 제출은 항상 에러 배너가 뜨는 게 정상.
+
+### 2. 코어 리셋 — 프리미엄 구성 내역 채우기
+원본 구글폼에 ②프리미엄 구성이 없어서 `coreReset.ts` 의 `plans[1].includes` / `forWhom` 을 **빈 배열**로 두고 `note`("구성 상세는 신청 후 상담 시 개별 안내드립니다.")만 띄우고 있다.
+사장님께 구성 받아서 두 배열만 채우면 카드에 그대로 렌더된다.
+
+### 3. 코어 리셋 — 상담 가능 일정 갱신
+`coreReset.ts` 의 `scheduleInfo.slots` 는 **수기 관리**. 현재 `8월 5·6·7·19일`. 회차가 지나면 반드시 교체.
+
+### 4. 예약 시스템(booking) 오픈 전 e2e 1회
+신청 → 슬롯 Hold → 무통장 결제 → 알림톡 발송. 상세는 §16 아래 "⏭️ 다음에 돌아오면 곧바로 할 일".
+
+### 5. 솔라피 잔액 확인
+잔액이 부족하면 **문자만 실패하고 신청 저장은 성공**한다(설계상 의도). 사장님이 알림을 못 받는 상황이 될 수 있으니 주기적으로 확인. §17-D·§15.
+
+## D. 반복해서 걸렸던 함정 (같은 실수 반복 금지)
+
+1. **헤더 가로 폭** — 데스크톱 메뉴는 xl(1280px)에서 **여유가 70px 남짓**이다. 최상위 항목을 늘리면 로고·전화번호가 접힌다(§18-F에서 한 번, §19-E에서 또 한 번 터졌다).
+   → **신청서를 추가할 땐 `site.ts` 의 '신청서' 항목 `children` 에 넣을 것.** 최상위 추가 금지.
+2. **드롭다운을 CSS로만 만들지 말 것** — `focus-within` 만 쓰면 항목 클릭 후 포커스가 남아 메뉴가 안 닫힌다(§22-A). 상태 기반 + 5가지 닫힘 조건 유지.
+3. **동의 체크박스의 오류 키가 문항 id 와 겹치면 안 된다** — `program`(문항) vs `program`(동의) 충돌로 엉뚱한 오류가 지워졌다(§20-D). `CONSENT_ERROR` 맵으로 `*_consent` 분리.
+4. **`plan.option` 등 DB 에 그대로 저장되는 문자열은 바꾸지 말 것** — 기존 응답과 값이 어긋난다. 문항 `id` 도 마찬가지(분석 시 컬럼처럼 쓰인다).
+5. **마이그레이션은 자동 적용되지 않는다** — `supabase/migrations/*.sql` 을 **Supabase SQL Editor 에서 수기 실행**해야 한다. 안 하면 제출 시 `INSERT_FAILED`.
+6. **담당자 알림 번호는 코드가 아니라 환경변수** — Vercel `HOST_NOTIFY_PHONE`(콤마로 여러 번호). 현재 `010-5686-4182`(짱샘) 포함 2개. 폼 5종이 공유한다.
+7. **`.bkit/`·`scripts/` 는 커밋하지 않는다** — 이번 세션 내내 미추적으로 남겨 둔 무관한 디렉토리.
+8. **브라우저 자동화로 React 상태를 검증할 때** — 같은 JS 태스크 안에서 클릭→상태읽기를 연달아 하면 커밋 전이라 옛 값이 읽힌다. 호출을 나눌 것(§22-A).
+
+## E. 이번 세션(2026-07-26~27) 커밋 목록
+
+| 커밋 | 내용 |
+|---|---|
+| `46095ec` | §19 4주 몸읽기 프로젝트 신청 탭 신설 |
+| `8c06bf7` | §21-A "무료 상담 예약" → "브레인 코칭" 전면 리네이밍 |
+| `1de4a28` | §20 코어 리셋 신청 탭 신설 + 헤더 '신청서' 드롭다운 |
+| `482a902` | §21-B 프리미엄 프로그램 선택지 개방 + 문서 정리 |
+| `07e4012` | §22 드롭다운 닫힘 버그 수정 + 입금 후 수동 문자 안내 제거 |
