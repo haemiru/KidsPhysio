@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import { Menu, X, Phone, ChevronDown } from 'lucide-react'
 import Logo from './Logo'
@@ -140,7 +140,9 @@ export default function Header() {
 
 /**
  * 데스크톱 드롭다운 메뉴.
- * 마우스는 hover, 키보드는 focus-within 으로 열린다 (상태 없이 CSS로만 제어).
+ * 마우스는 hover, 키보드는 버튼 클릭(Enter/Space)으로 연다.
+ * 닫히는 조건: 항목 클릭 · 라우트 이동 · 마우스 이탈 · 포커스 이탈 · 바깥 클릭 · Esc.
+ * (CSS focus-within 만 쓰면 항목을 클릭해도 그 링크에 포커스가 남아 열린 채로 있다)
  */
 function NavDropdown({
   label,
@@ -151,25 +153,74 @@ function NavDropdown({
   items: NavLinkItem[]
   pathname: string
 }) {
+  const [open, setOpen] = useState(false)
+  const [seenPath, setSeenPath] = useState(pathname)
+  const wrapRef = useRef<HTMLDivElement>(null)
   const active = items.some((i) => pathname === i.to || pathname.startsWith(`${i.to}/`))
 
+  // 라우트가 바뀌면 닫는다 — 뒤로가기 등 링크 클릭 외의 이동까지 커버.
+  // (렌더 중 비교하는 React 권장 패턴. effect 로 하면 한 프레임 열린 채로 깜빡인다)
+  if (seenPath !== pathname) {
+    setSeenPath(pathname)
+    setOpen(false)
+  }
+
+  useEffect(() => {
+    if (!open) return
+    const onPointerDown = (e: MouseEvent | TouchEvent) => {
+      if (!wrapRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', onPointerDown)
+    document.addEventListener('touchstart', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown)
+      document.removeEventListener('touchstart', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
   return (
-    <div className="group relative">
-      <button type="button" className={`${itemCls(active)} inline-flex items-center gap-0.5`}>
+    <div
+      ref={wrapRef}
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      // 탭으로 메뉴 밖으로 나가면 닫는다
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setOpen(false)
+      }}
+    >
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-haspopup="true"
+        onClick={() => setOpen((v) => !v)}
+        className={`${itemCls(active)} inline-flex items-center gap-0.5`}
+      >
         {label}
         <ChevronDown
-          className="h-4 w-4 transition-transform group-hover:rotate-180"
+          className={`h-4 w-4 transition-transform ${open ? 'rotate-180' : ''}`}
           aria-hidden="true"
         />
       </button>
 
       {/* pt-2 는 버튼과 패널 사이 마우스 이동 시 hover 가 끊기지 않게 하는 여백 */}
-      <div className="pointer-events-none absolute left-1/2 top-full z-10 -translate-x-1/2 pt-2 opacity-0 transition-opacity group-focus-within:pointer-events-auto group-focus-within:opacity-100 group-hover:pointer-events-auto group-hover:opacity-100">
+      <div
+        className={`absolute left-1/2 top-full z-10 -translate-x-1/2 pt-2 transition-opacity ${
+          open ? 'opacity-100' : 'pointer-events-none opacity-0'
+        }`}
+      >
         <ul className="min-w-[11rem] rounded-2xl border border-brand-100 bg-white p-1.5 shadow-card">
           {items.map((item) => (
             <li key={item.to}>
               <NavLink
                 to={item.to}
+                // 같은 페이지를 다시 눌러 pathname 이 안 바뀌는 경우까지 닫는다
+                onClick={() => setOpen(false)}
                 className={({ isActive }) =>
                   `block whitespace-nowrap rounded-xl px-3.5 py-2.5 text-[15px] font-semibold transition-colors ${
                     isActive

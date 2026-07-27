@@ -412,7 +412,9 @@ export const feeInfo = {
   extra: '일요일·공휴일 예약 진행 시 50,000원 추가 비용이 발생합니다.',
   account: { bank: '기업은행', number: '667-029459-01-011', holder: '장지예' },
   afterDeposit: '입금 완료 후 예약이 최종 확정됩니다.',
-  sendTo: { phone: '010-5686-4182', items: ['아이 이름', '입금자명'] },
+  // 신청 접수 시 보호자·아이 이름이 담당자에게 자동으로 문자 발송되므로
+  // (api/core-reset-apply.js → HOST_NOTIFY_PHONE) 별도로 문자를 보낼 필요가 없다.
+  depositNameNotice: '입금자명은 보호자 성함과 같게 해 주시면 확인이 빠릅니다.',
   consentLabel: '프로그램 비용 및 입금 안내를 이해했습니다.',
 } as const
 

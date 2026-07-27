@@ -225,6 +225,8 @@ export default function CoreResetPage() {
             </span>
             <h2 className="mt-6 text-2xl font-extrabold text-ink">신청해 주셔서 감사합니다 💛</h2>
             <p className="mt-3 leading-relaxed text-muted">
+              신청 내용이 담당자에게 전달되었습니다.
+              <br />
               선택해주신 일정 중 최종 조율 후 개별 연락드리겠습니다.
               <br />
               아래 계좌로 입금해 주시면 예약이 최종 확정됩니다.
@@ -233,11 +235,7 @@ export default function CoreResetPage() {
             <AccountBox onCopy={copyAccount} copied={copied} />
 
             <p className="mt-5 text-[15px] leading-relaxed text-muted">
-              입금 후 <strong className="text-ink">{feeInfo.sendTo.items.join(' · ')}</strong>을{' '}
-              <a href={site.phoneHref} className="font-bold text-brand-700 hover:underline">
-                {feeInfo.sendTo.phone}
-              </a>
-              로 보내주세요 😊
+              {feeInfo.depositNameNotice}
             </p>
             <Link to="/" className="btn btn-primary mt-8">
               홈으로 돌아가기
@@ -509,17 +507,8 @@ export default function CoreResetPage() {
             <AccountBox onCopy={copyAccount} copied={copied} />
 
             <p className="mt-4 text-[15px] leading-relaxed text-muted">
-              {feeInfo.afterDeposit} 입금 후 아래 내용을{' '}
-              <strong className="text-ink">{feeInfo.sendTo.phone}</strong>로 보내주세요 😊
+              {feeInfo.afterDeposit} {feeInfo.depositNameNotice}
             </p>
-            <ul className="mt-2 space-y-1 text-[15px] text-ink">
-              {feeInfo.sendTo.items.map((it) => (
-                <li key={it} className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-brand-600" strokeWidth={3} aria-hidden="true" />
-                  {it}
-                </li>
-              ))}
-            </ul>
 
             <ConsentCheck
               checked={consents.fee}
