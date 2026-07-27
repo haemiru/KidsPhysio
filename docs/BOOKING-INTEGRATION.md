@@ -598,7 +598,7 @@ RPC: `rf_is_admin()`(RLS용), `rf_submit_application(jsonb)`(동의검증+삽입
 - ✅ `tsc -b` + `vite build` + eslint 통과.
 - ✅ 브라우저(1280px 기준) 확인: 헤더 1줄 정렬, 안내 카드·예시 블록 렌더, **필수검증 6건 모두 표시**, 성함 특수문자 제거·연락처 자동 포맷, **단독 선택 보기 동작**(2개 선택 → '아직 결정' 누르면 단독 → 다른 항목 누르면 '아직 결정' 해제).
 - ⚠️ **남은 필수 작업 2가지**
-  1. **`supabase/migrations/0008_project_applications.sql`을 Supabase SQL Editor에서 실행** (0005~0007과 동일한 수기 절차). 실행 전에는 제출 시 `INSERT_FAILED`.
+  1. ~~`supabase/migrations/0008_project_applications.sql`을 Supabase SQL Editor에서 실행~~ → **2026-07-27 실행 완료.**
   2. main push → 자동배포. `/api/*`는 Vercel 함수라 **로컬 dev(`npm run dev`)에서는 제출이 동작하지 않음** — 배포본에서 실제 제출 1건으로 저장·문자 확인 필요.
 - 알림 문자는 §17-D의 `HOST_NOTIFY_PHONE`·`SOLAPI_SENDER_PHONE`을 그대로 사용(추가 환경변수 없음).
 - 응답 확인: Supabase Table Editor → `rf_project_applications`(신청), `rf_notifications`(발송 로그, channel=sms·kind=`project_application`).
@@ -649,7 +649,66 @@ RPC: `rf_is_admin()`(RLS용), `rf_submit_application(jsonb)`(동의검증+삽입
 - ✅ `tsc -b` + `vite build` + eslint 통과.
 - ✅ 브라우저 확인: 드롭다운 개폐(키보드 focus 포함)·현재 페이지 하이라이트, 모바일 드로어 그룹 렌더, 푸터 12개 링크(children 평면화), **필수검증 24건 전부 표시 → 전부 채우면 0건**, 배타 선택 동작, 조사 교정.
 - ⚠️ **남은 필수 작업 2가지**
-  1. **`supabase/migrations/0009_core_reset_applications.sql` 을 Supabase SQL Editor 에서 실행**. 실행 전에는 제출 시 `INSERT_FAILED`.
+  1. ~~`supabase/migrations/0009_core_reset_applications.sql` 을 Supabase SQL Editor 에서 실행~~ → **2026-07-27 실행 완료.**
   2. main push → 자동배포. `/api/*` 는 로컬 dev 에서 동작하지 않음 — 배포본에서 실제 제출 1건 확인 필요.
 - 📌 **상담 가능 일정(`scheduleInfo.slots`)은 회차마다 손으로 갱신해야 한다** — 현재 8월 5·6·7·19일.
 - 📌 프로그램은 현재 **베이직만 선택 가능**(구글폼과 동일). 프리미엄 390,000원은 비용 안내에만 노출 — 선택지로 열려면 `programs.options` 에 추가.
+
+---
+
+## 21. 브레인 코칭 리네이밍 + 프리미엄 프로그램 개방 (2026-07-27)
+
+> §19~§20 사이·이후에 진행된 두 건. 커밋은 각각 `8c06bf7`, 본 세션 마지막 커밋.
+
+### A. "무료 상담 예약" → **"브레인 코칭"** 전면 리네이밍 (`8c06bf7`)
+사이트 전역의 무료 상담 진입점 명칭을 바꿨다. **라우트(`/contact`)와 저장 로직(`rf_consultations`)은 그대로** — 순수 문구 변경.
+
+| 파일 | 변경 |
+|---|---|
+| `src/components/Hero.tsx` | 히어로 CTA `무료 발달 상담 예약` → `브레인 코칭` |
+| `src/components/Header.tsx` | 데스크톱·모바일 헤더 버튼 2곳 |
+| `src/components/CtaBand.tsx` | 서브페이지 하단 배너 버튼 + 기본 안내 문구 |
+| `src/components/Contact.tsx` | 배지 / 폼 제목 `상담 신청서`→`브레인 코칭 신청서` / 제출 버튼 / 접수 완료 문구 |
+| `src/pages/ContactPage.tsx` | 오시는 길 상단 안내 문구 |
+| `api/consult-submit.js` | 사장님 알림 문자 제목·머리글 → `새 브레인 코칭 신청` |
+
+- 폼 필드 라벨 `상담 내용`, 동의 문구의 `상담 목적`은 **서비스명이 아니라 입력 내용 설명**이라 그대로 뒀다.
+- `src/` 에 '무료' 잔존 0건. 라벨이 짧아져 헤더 가로 여유는 오히려 늘었다.
+- ⚠️ 헤더에 `4주 코칭`(유료 `/coaching`)과 `브레인 코칭`(무료 문의 `/contact`)이 나란히 놓인다. 링크 목적지는 다르니 **둘을 혼동하지 말 것.**
+
+### B. 코어 리셋 — 프리미엄 프로그램 선택지 개방
+`§20`에서는 구글폼과 동일하게 베이직만 선택 가능했으나, 프리미엄(390,000원)도 신청 가능하도록 열었다.
+
+- `programs.basic` (단일 객체) → **`programs.plans` 배열 + `ProgramPlan` 타입**으로 구조 변경. 카드 2장을 동일 렌더러로 그린다.
+- 선택지는 `programOptions`(= `plans.map(p => p.option)`)에서 파생 → **플랜을 추가하면 카드와 선택지가 함께 늘어난다.**
+- 선택한 카드는 테두리·배경이 강조되고, 칩에는 체크가 붙는다(단일 선택).
+- ⚠️ **원본 구글폼에 프리미엄 구성 내역이 없었다**(①만 기재). 구성을 지어내지 않고 `includes`/`forWhom` 을 **빈 배열로 두고** `note`("구성 상세는 신청 후 상담 시 개별 안내드립니다.")를 표시한다.
+  **구성이 정해지면 `coreReset.ts` 의 `plans[1].includes` / `forWhom` 만 채우면 카드에 그대로 반영된다.**
+- ⚠️ `plan.option` 문자열은 **DB `program` 컬럼에 그대로 저장되는 값**이다. 바꾸면 기존 응답과 값이 어긋나므로 변경 금지.
+
+### C. DB 마이그레이션 실행 상태 (2026-07-27 기준)
+| 파일 | 테이블 | 실행 |
+|---|---|---|
+| `0005_survey.sql` | `rf_survey_responses` | ✅ |
+| `0006_consultations.sql` | `rf_consultations` | ✅ |
+| `0007_class_applications.sql` | `rf_class_applications` | ✅ |
+| `0008_project_applications.sql` | `rf_project_applications` | ✅ 2026-07-27 |
+| `0009_core_reset_applications.sql` | `rf_core_reset_applications` | ✅ 2026-07-27 |
+
+### D. 현재 사이트의 폼 5종 한눈에
+| 경로 | 이름 | 테이블 | 문자 `kind` |
+|---|---|---|---|
+| `/contact` | 브레인 코칭(무료 문의) | `rf_consultations` | `consultation` |
+| `/survey` | 브레인센트 종료 설문 | `rf_survey_responses` | — |
+| `/class` | 후각키트 만들기 클래스 | `rf_class_applications` | `class_application` |
+| `/project` | 4주 몸읽기 프로젝트 | `rf_project_applications` | `project_application` |
+| `/core-reset` | 코어 리셋 코칭 | `rf_core_reset_applications` | `core_reset_application` |
+
+- 헤더 노출: `/class` = '클래스' 탭, `/project`·`/core-reset` = **'신청서' 드롭다운**, `/survey` = '설문' 탭, `/contact` = '오시는 길' 탭 + CTA 버튼.
+- 신청서를 더 만들면 **'신청서' 드롭다운에 `children` 으로 추가** — 최상위 항목은 늘리지 말 것(§20-B).
+
+### E. 확인한 것 / 남은 것
+- ✅ `tsc -b` + `vite build` + eslint 통과. 브라우저에서 프리미엄 카드 렌더·선택 시 하이라이트·베이직↔프리미엄 단일 선택 전환 확인.
+- ⚠️ 남은 것: **배포본에서 `/project`·`/core-reset` 실제 제출 1건씩** 넣어 저장·문자 확인(로컬 dev 에서는 `/api/*` 가 동작하지 않음).
+- 📌 프리미엄 구성 내역 확정 시 `coreReset.ts` 채워 넣기(위 B 참고).
+- 📌 상담 가능 일정(`scheduleInfo.slots`)은 회차마다 수기 갱신 — 현재 8월 5·6·7·19일.

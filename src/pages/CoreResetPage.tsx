@@ -22,6 +22,7 @@ import {
   coreResetSections,
   programNotice,
   programs,
+  programOptions,
   scheduleInfo,
   refundPolicy,
   feeInfo,
@@ -337,36 +338,61 @@ export default function CoreResetPage() {
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-muted">{programs.intro}</p>
 
-            <div className="mt-5 rounded-2xl border border-brand-100 bg-brand-50/50 p-5">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <h3 className="text-[17px] font-extrabold text-ink">① {programs.basic.name}</h3>
-                <span className="text-sm font-semibold text-muted">
-                  📍 {programs.basic.schedule}
-                </span>
-                <span className="text-lg font-extrabold text-brand-700">
-                  {programs.basic.price}
-                </span>
-              </div>
-              <ul className="mt-3 space-y-2">
-                {programs.basic.includes.map((it) => (
-                  <li key={it} className="flex items-start gap-2 text-[15px] leading-relaxed text-ink">
-                    <Check
-                      className="mt-1 h-4 w-4 shrink-0 text-brand-600"
-                      strokeWidth={3}
-                      aria-hidden="true"
-                    />
-                    <span>{it}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-4 border-t border-brand-100 pt-3">
-                <p className="text-sm font-bold text-brand-700">이런 분께 권해요</p>
-                <ul className="mt-1.5 space-y-1 text-[14px] leading-relaxed text-muted">
-                  {programs.basic.forWhom.map((w) => (
-                    <li key={w}>· {w}</li>
-                  ))}
-                </ul>
-              </div>
+            <div className="mt-5 space-y-4">
+              {programs.plans.map((plan) => {
+                const selected = answers.program === plan.option
+                return (
+                  <div
+                    key={plan.option}
+                    className={`rounded-2xl border p-5 transition ${
+                      selected ? 'border-brand-400 bg-brand-50' : 'border-brand-100 bg-brand-50/50'
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <h3 className="text-[17px] font-extrabold text-ink">
+                        {plan.badge} {plan.name}
+                      </h3>
+                      {plan.schedule && (
+                        <span className="text-sm font-semibold text-muted">📍 {plan.schedule}</span>
+                      )}
+                      <span className="text-lg font-extrabold text-brand-700">{plan.price}</span>
+                    </div>
+
+                    {plan.includes.length > 0 && (
+                      <ul className="mt-3 space-y-2">
+                        {plan.includes.map((it) => (
+                          <li
+                            key={it}
+                            className="flex items-start gap-2 text-[15px] leading-relaxed text-ink"
+                          >
+                            <Check
+                              className="mt-1 h-4 w-4 shrink-0 text-brand-600"
+                              strokeWidth={3}
+                              aria-hidden="true"
+                            />
+                            <span>{it}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {plan.forWhom.length > 0 && (
+                      <div className="mt-4 border-t border-brand-100 pt-3">
+                        <p className="text-sm font-bold text-brand-700">이런 분께 권해요</p>
+                        <ul className="mt-1.5 space-y-1 text-[14px] leading-relaxed text-muted">
+                          {plan.forWhom.map((w) => (
+                            <li key={w}>· {w}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {plan.note && (
+                      <p className="mt-3 text-[14px] leading-relaxed text-muted">※ {plan.note}</p>
+                    )}
+                  </div>
+                )
+              })}
             </div>
 
             <p className="mt-6 text-[15px] font-bold text-ink">
@@ -376,12 +402,15 @@ export default function CoreResetPage() {
               </span>
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
-              {programs.options.map((opt) => (
+              {programOptions.map((opt) => (
                 <Chip
                   key={opt}
                   active={answers.program === opt}
                   onClick={() => setValue('program', answers.program === opt ? '' : opt)}
                 >
+                  {answers.program === opt && (
+                    <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
+                  )}
                   {opt}
                 </Chip>
               ))}

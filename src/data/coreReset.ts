@@ -314,28 +314,59 @@ export const programNotice = {
 
 /* ── 8. 프로그램 선택 ── */
 
+export type ProgramPlan = {
+  badge: string
+  name: string
+  /** 운영 방식 한 줄 (없으면 표시 생략) */
+  schedule?: string
+  price: string
+  /** 신청서에서 고를 때 저장되는 값 — 변경하면 기존 응답과 값이 어긋난다 */
+  option: string
+  includes: string[]
+  forWhom: string[]
+  /** 구성이 아직 확정되지 않았을 때 카드에 대신 띄울 안내 */
+  note?: string
+}
+
 export const programs = {
-  intro: '브레인센트 코어 리셋 시스템™은 아이의 신경계 상태와 보호자의 필요에 따라 프로그램을 선택할 수 있습니다.',
-  basic: {
-    name: 'BASIC 코어 코칭 프로그램',
-    schedule: '월 1회 대면 코칭',
-    price: '150,000원',
-    includes: [
-      '대면 코칭 1회 (60~90분)',
-      '맞춤 홈케어 가이드',
-      '인헤일러 키트 3종 — 오렌지 · 라벤더 · 샌달우드',
-      '후각 스프레이 3종 — 오렌지 · 라벤더 · 샌달우드',
-      '라벤프랑 필로우 미스트 / 자율신경계 밸런스 바디오일',
-    ],
-    forWhom: [
-      '현재 아이 상태를 먼저 평가받고 싶은 경우',
-      '홈케어 방향이 필요한 경우',
-      '단기 코칭이 필요한 경우',
-    ],
-  },
-  /** 신청서에서 고를 수 있는 프로그램 (문항 id: program) */
-  options: ['베이직 코어 리셋 시스템 150,000원'],
+  intro:
+    '브레인센트 코어 리셋 시스템™은 아이의 신경계 상태와 보호자의 필요에 따라 2가지 프로그램 중 선택할 수 있습니다.',
+  plans: [
+    {
+      badge: '①',
+      name: 'BASIC 코어 코칭 프로그램',
+      schedule: '월 1회 대면 코칭',
+      price: '150,000원',
+      option: '베이직 코어 리셋 시스템 150,000원',
+      includes: [
+        '대면 코칭 1회 (60~90분)',
+        '맞춤 홈케어 가이드',
+        '인헤일러 키트 3종 — 오렌지 · 라벤더 · 샌달우드',
+        '후각 스프레이 3종 — 오렌지 · 라벤더 · 샌달우드',
+        '라벤프랑 필로우 미스트 / 자율신경계 밸런스 바디오일',
+      ],
+      forWhom: [
+        '현재 아이 상태를 먼저 평가받고 싶은 경우',
+        '홈케어 방향이 필요한 경우',
+        '단기 코칭이 필요한 경우',
+      ],
+    },
+    {
+      badge: '②',
+      name: 'PREMIUM 코어 코칭 프로그램',
+      price: '390,000원',
+      option: '프리미엄 코어 리셋 시스템 390,000원',
+      // ⚠️ 원본 신청서에 프리미엄 구성이 적혀 있지 않았다.
+      //    구성이 정해지면 includes / forWhom 을 채우면 카드에 그대로 표시된다.
+      includes: [],
+      forWhom: [],
+      note: '구성 상세는 신청 후 상담 시 개별 안내드립니다.',
+    },
+  ] as ProgramPlan[],
 } as const
+
+/** 신청서에서 고를 수 있는 프로그램 (문항 id: program) */
+export const programOptions = programs.plans.map((p) => p.option)
 
 /* ── 9. 상담 가능 일정 ── */
 
