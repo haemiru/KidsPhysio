@@ -14,6 +14,8 @@ import ClassApplyPage from './pages/ClassApplyPage'
 import ProjectApplyPage from './pages/ProjectApplyPage'
 import CoreResetPage from './pages/CoreResetPage'
 import SurveyPage from './pages/SurveyPage'
+import PrivacyPage from './pages/PrivacyPage'
+import TermsPage from './pages/TermsPage'
 import NotFound from './pages/NotFound'
 
 // 코칭 예약 시스템(booking) — 자체 레이아웃(PublicLayout)을 쓰는 독립 페이지들
@@ -25,7 +27,6 @@ import PaymentSuccess from './booking/pages/PaymentSuccess'
 import PaymentFail from './booking/pages/PaymentFail'
 import Complete from './booking/pages/Complete'
 import MyReservation from './booking/pages/MyReservation'
-import Privacy from './booking/pages/Privacy'
 import AdminApp from './booking/pages/admin/AdminApp'
 
 function App() {
@@ -45,6 +46,9 @@ function App() {
         <Route path="/project" element={<ProjectApplyPage />} />
         <Route path="/core-reset" element={<CoreResetPage />} />
         <Route path="/survey" element={<SurveyPage />} />
+        {/* 법적 고지 — 예약 시스템(booking)의 동의 링크도 이 두 페이지를 가리킨다 */}
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="*" element={<NotFound />} />
       </Route>
@@ -58,7 +62,6 @@ function App() {
       <Route path="/payment/fail" element={<PaymentFail />} />
       <Route path="/complete" element={<Complete />} />
       <Route path="/my" element={<MyReservation />} />
-      <Route path="/privacy" element={<Privacy />} />
       <Route path="/admin/*" element={<AdminApp />} />
     </Routes>
   )
