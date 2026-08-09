@@ -870,3 +870,38 @@ src/data/site.ts        nav 에 추가 (⚠️ 최상위 말고 '신청서' chil
   - 검증 중 발견해 고친 것: 헤더는 `<th>` 자동폭인데 본문은 CSS grid 라 **열이 어긋나던 문제** → 헤더/행이 같은 grid 템플릿(`COLS`)을 공유하도록 변경.
 - ⚠️ **남은 필수 작업**: `0010_admin_read_survey.sql` 을 Supabase SQL Editor 에서 실행. 실행 전에는 목록이 빈 채로 보인다.
 - 📌 나머지 폼 4종(상담·클래스·몸읽기·코어리셋)도 같은 방식으로 관리자 화면을 붙일 수 있다. 테이블별 select 정책 + 페이지 1개씩이면 된다.
+
+---
+
+## 25. 신청 내역 관리자 페이지 — 폼 4종 (2026-08-09)
+
+> §24(설문)에 이어 나머지 4종(상담·클래스·몸읽기·코어리셋)도 `/admin` 에서 본다. **페이지 4개 대신 설정 기반 단일 페이지** 하나로 만들었다.
+
+### A. 구성
+| 파일 | 역할 |
+|---|---|
+| `supabase/migrations/0011_admin_read_applications.sql` (신규) | 4개 테이블에 **select 전용** 관리자 정책(`rf_is_admin()`) |
+| `src/booking/pages/admin/Applications.tsx` (신규) | 폼 선택 칩 4개 + 목록 + 행 펼침 + CSV. `FORMS` 설정 배열이 전부를 구동 |
+| `AdminApp.tsx` / `AdminLayout.tsx` | 라우트 `applications` + 탭 '신청 내역' |
+
+**폼을 추가할 때는 `FORMS` 배열에 한 항목만 넣으면 된다** — `{ key, label, table, columns, sections?, extra?, body? }`.
+- `sections` = 그 폼의 데이터 스키마(`classSections`/`projectSections`/`coreResetSections`)를 그대로 넘긴다 → 상세·CSV 라벨이 신청서와 자동으로 동기화된다.
+- `extra` = 스키마 바깥에 있는 문항(코어리셋의 프로그램·일정처럼 전용 블록으로 렌더된 것).
+- `body` = 스키마가 없는 폼(상담)에서 크게 보여줄 컬럼.
+
+### B. ⚠️ 함정 — 라벨 없는 문항의 id 노출
+클래스·몸읽기 폼은 **섹션 제목이 곧 질문**이라 문항에 `label` 이 없다. `q.label || q.id` 로 대체하면 화면에 `occupation`, `apply_reason` 같은 **원본 id 가 그대로 노출된다**(검증 중 발견해 수정).
+→ 라벨이 없으면 **`<dt>` 자체를 그리지 않고**(섹션 제목이 질문 역할), CSV 열 이름만 `sec.title` 로 채운다.
+
+### C. 확인한 것 / 남은 것
+- ✅ `tsc -b` + `vite build` + eslint 통과.
+- ✅ **실데이터로 4종 전부 검증** — 상담 4건 / 클래스 6건 / 몸읽기 7건 / 코어리셋 1건.
+  탭 전환, 폼별 컬럼 구성, 행 펼침(전 섹션·문항 라벨), 코어리셋의 `프로그램·일정` 블록, 동의 표시까지 확인.
+  §24 와 같이 임시 미리보기 라우트 + 픽스처로 검증한 뒤 **임시 코드는 전부 제거**했다.
+- ⚠️ **남은 필수 작업**: `0011_admin_read_applications.sql` 을 Supabase SQL Editor 에서 실행. 실행 전에는 목록이 빈 채로 보인다(§24-C 와 동일하게 안내 문구를 넣어 뒀다).
+- 📌 **열람 전용이다.** 입금 확인(`status` 변경)은 여전히 Supabase Table Editor 에서 한다. 관리자 화면에서 바꾸려면 update 정책 + UI 가 따로 필요하다.
+- 🔒 `rf_core_reset_applications` 에는 **진단·치료 이력 등 민감정보**가 있다. `rf_admins` 화이트리스트를 최소 인원으로 유지할 것.
+
+### D. §23-C1 해소 — 신규 폼 실제 제출 검증 완료
+§23 에서 "최우선"으로 남겨 뒀던 `/project`·`/core-reset` 실제 저장 검증이 **실제 신청으로 확인됐다**
+(2026-08-09 기준 몸읽기 7건, 코어리셋 1건 저장 확인). 별도 테스트 제출은 불필요.

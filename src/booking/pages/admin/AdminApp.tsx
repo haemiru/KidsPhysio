@@ -7,6 +7,7 @@ import Bookings from './Bookings'
 import Slots from './Slots'
 import FormEditor from './FormEditor'
 import Survey from './Survey'
+import Applications from './Applications'
 
 export default function AdminApp() {
   const { session, isAdmin, loading, signOut } = useAdminSession()
@@ -27,6 +28,7 @@ export default function AdminApp() {
         <Route path="bookings" element={<Bookings />} />
         <Route path="slots" element={<Slots />} />
         <Route path="form" element={<FormEditor />} />
+        <Route path="applications" element={<Applications />} />
         <Route path="survey" element={<Survey />} />
         <Route path="*" element={<Navigate to="dashboard" replace />} />
       </Routes>
