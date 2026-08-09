@@ -136,6 +136,10 @@ export default function Footer() {
               <a href="#" className="hover:text-white/80">
                 이용약관
               </a>
+              {/* 운영자용 진입점 — 로그인·권한(rf_admins)으로 막혀 있어 노출돼도 무방하다 */}
+              <Link to="/admin" className="text-white/30 hover:text-white/80">
+                관리자
+              </Link>
             </p>
           </div>
         </div>
