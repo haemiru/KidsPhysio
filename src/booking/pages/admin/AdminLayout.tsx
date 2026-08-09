@@ -6,6 +6,7 @@ const tabs = [
   { to: 'bookings', label: '예약 현황' },
   { to: 'slots', label: '시간·휴무' },
   { to: 'form', label: '신청서 항목' },
+  { to: 'survey', label: '설문 응답' },
 ]
 
 export default function AdminLayout({
