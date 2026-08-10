@@ -10,6 +10,7 @@ import {
   Copy,
   ShieldCheck,
   Info,
+  RefreshCcw,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import { site } from '../data/site'
@@ -17,6 +18,7 @@ import {
   projectMeta,
   projectInfo,
   projectFee,
+  projectRefund,
   projectAccount,
   projectSections,
   privacyConsent,
@@ -257,6 +259,14 @@ export default function ProjectApplyPage() {
             </p>
             <AccountBox onCopy={copyAccount} copied={copied} />
             <p className="mt-3 text-[14px] font-semibold text-brand-700">※ {projectFee.notice}</p>
+
+            <div className="mt-5 rounded-2xl bg-sand/60 p-5">
+              <h3 className="flex items-center gap-2 text-[15px] font-extrabold text-ink">
+                <RefreshCcw className="h-4 w-4 text-brand-600" aria-hidden="true" />
+                {projectRefund.title}
+              </h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-muted">{projectRefund.body}</p>
+            </div>
           </div>
 
           {/* 10. 개인정보 동의 */}

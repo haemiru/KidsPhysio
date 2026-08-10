@@ -35,6 +35,15 @@ export const projectFee = {
   notice: '입금이 확인되면 신청이 완료되며, 카카오톡 단톡방으로 초대해 드립니다.',
 } as const
 
+/**
+ * 취소·환불 안내.
+ * ⚠️ 이용약관(src/pages/TermsPage.tsx) 제8조와 반드시 같은 내용을 유지할 것.
+ */
+export const projectRefund = {
+  title: '취소 · 환불 안내',
+  body: '프로젝트 시작 전까지 취소하시면 100% 환불해 드립니다. 프로젝트가 시작된 이후에는 자료 제공과 운영 특성상 환불이 어렵습니다.',
+} as const
+
 export const projectAccount = {
   bank: '기업은행',
   number: '667-029459-01-011',

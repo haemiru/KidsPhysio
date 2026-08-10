@@ -9,12 +9,14 @@ import {
   Landmark,
   Copy,
   ShieldCheck,
+  RefreshCcw,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import { site } from '../data/site'
 import {
   classMeta,
   classAccount,
+  classRefund,
   classSections,
   privacyConsent,
   marketingConsent,
@@ -212,6 +214,14 @@ export default function ClassApplyPage() {
               성함과 같게 해 주세요.
             </p>
             <AccountBox onCopy={copyAccount} copied={copied} />
+
+            <div className="mt-5 rounded-2xl bg-sand/60 p-5">
+              <h3 className="flex items-center gap-2 text-[15px] font-extrabold text-ink">
+                <RefreshCcw className="h-4 w-4 text-brand-600" aria-hidden="true" />
+                {classRefund.title}
+              </h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-muted">{classRefund.body}</p>
+            </div>
           </div>
 
           {/* 개인정보 활용 동의 */}
