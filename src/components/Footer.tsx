@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, LogIn } from 'lucide-react'
 import Logo from './Logo'
 import { business, navLinks, site } from '../data/site'
 
@@ -127,21 +127,25 @@ export default function Footer() {
             </div>
           </dl>
 
-          <div className="mt-5 flex flex-col items-center justify-between gap-2 border-t border-white/5 pt-4 sm:flex-row">
+          <div className="mt-5 flex flex-col items-center justify-between gap-3 border-t border-white/5 pt-4 sm:flex-row">
             <p>© {new Date().getFullYear()} {business.companyName}. All rights reserved.</p>
-            <p className="flex gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               <Link to="/privacy" className="hover:text-white/80">
                 개인정보처리방침
               </Link>
               <Link to="/terms" className="hover:text-white/80">
                 이용약관
               </Link>
-              {/* 운영자용 진입점 — 로그인·권한(rf_admins)으로 막혀 있어 노출돼도 무방하다.
-                  일부러 흐리게 두면 사장님이 못 찾는다 → 옆 링크들과 같은 밝기로 둔다 */}
-              <Link to="/admin" className="hover:text-white/80">
+              {/* 운영자용 진입점 — 로그인 + rf_admins 화이트리스트로 막혀 있어 노출돼도 무방하다.
+                  텍스트 링크로는 눈에 안 띈다는 피드백을 받아 버튼 형태로 둔다 */}
+              <Link
+                to="/admin"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/20 px-3.5 py-1.5 font-semibold text-white/70 transition hover:border-white/40 hover:bg-white/10 hover:text-white"
+              >
+                <LogIn className="h-3.5 w-3.5" aria-hidden="true" />
                 관리자 로그인
               </Link>
-            </p>
+            </div>
           </div>
         </div>
       </div>
