@@ -136,9 +136,10 @@ export default function Footer() {
               <Link to="/terms" className="hover:text-white/80">
                 이용약관
               </Link>
-              {/* 운영자용 진입점 — 로그인·권한(rf_admins)으로 막혀 있어 노출돼도 무방하다 */}
-              <Link to="/admin" className="text-white/30 hover:text-white/80">
-                관리자
+              {/* 운영자용 진입점 — 로그인·권한(rf_admins)으로 막혀 있어 노출돼도 무방하다.
+                  일부러 흐리게 두면 사장님이 못 찾는다 → 옆 링크들과 같은 밝기로 둔다 */}
+              <Link to="/admin" className="hover:text-white/80">
+                관리자 로그인
               </Link>
             </p>
           </div>
