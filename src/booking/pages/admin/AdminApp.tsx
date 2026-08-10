@@ -23,14 +23,15 @@ export default function AdminApp() {
   return (
     <AdminLayout email={session.user.email} onSignOut={signOut}>
       <Routes>
-        <Route index element={<Navigate to="dashboard" replace />} />
+        {/* ⚠️ 절대 경로로 둘 것 — 상대 경로면 catch-all 이 계속 덧붙이며 무한 루프가 된다 */}
+        <Route index element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="bookings" element={<Bookings />} />
         <Route path="slots" element={<Slots />} />
         <Route path="form" element={<FormEditor />} />
         <Route path="applications" element={<Applications />} />
         <Route path="survey" element={<Survey />} />
-        <Route path="*" element={<Navigate to="dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
       </Routes>
     </AdminLayout>
   )

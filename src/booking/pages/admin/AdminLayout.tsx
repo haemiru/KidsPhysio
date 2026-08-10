@@ -1,13 +1,19 @@
 import { NavLink } from 'react-router-dom'
 import type { ReactNode } from 'react'
 
+/**
+ * ⚠️ 반드시 절대 경로로 둘 것.
+ * 상대 경로('survey')로 두면 /admin/dashboard 에서 누를 때
+ * /admin/dashboard/survey 로 붙어 라우트 매칭에 실패하고,
+ * AdminApp 의 catch-all 이 다시 'dashboard' 를 덧붙이며 무한 루프에 빠진다.
+ */
 const tabs = [
-  { to: 'dashboard', label: '신청 현황' },
-  { to: 'bookings', label: '예약 현황' },
-  { to: 'slots', label: '시간·휴무' },
-  { to: 'form', label: '신청서 항목' },
-  { to: 'applications', label: '신청 내역' },
-  { to: 'survey', label: '설문 응답' },
+  { to: '/admin/dashboard', label: '신청 현황' },
+  { to: '/admin/bookings', label: '예약 현황' },
+  { to: '/admin/slots', label: '시간·휴무' },
+  { to: '/admin/form', label: '신청서 항목' },
+  { to: '/admin/applications', label: '신청 내역' },
+  { to: '/admin/survey', label: '설문 응답' },
 ]
 
 export default function AdminLayout({
