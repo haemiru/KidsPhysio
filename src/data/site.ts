@@ -31,6 +31,8 @@ export const site = {
 export const business = {
   companyName: '주식회사 짱샘에듀',
   ceo: '하성재',
+  /** 개인정보 보호책임자 — 대표자와 다르므로 별도 관리 (개인정보처리방침에 표기) */
+  privacyOfficer: '장지예',
   bizRegNo: '711-81-03824',
   /** 사업자등록증상 사업장 소재지 */
   address: '서울특별시 강남구 강남대로112길 47, 2층 672A호(논현동)',

@@ -134,7 +134,8 @@ export default function PrivacyPage() {
                 head={['구분', '내용']}
                 rows={[
                   ['상호', business.companyName],
-                  ['대표자 · 개인정보 보호책임자', business.ceo],
+                  ['대표자', business.ceo],
+                  ['개인정보 보호책임자', business.privacyOfficer],
                   ['사업자등록번호', business.bizRegNo],
                   ['주소', business.address],
                   ['연락처', business.phone],
