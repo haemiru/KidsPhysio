@@ -322,7 +322,8 @@ export const programNotice = {
 /* ── 8. 프로그램 선택 ── */
 
 export type ProgramPlan = {
-  badge: string
+  /** ①② 같은 순번 표시. 프로그램이 하나뿐이면 생략한다 */
+  badge?: string
   name: string
   /** 운영 방식 한 줄 (없으면 표시 생략) */
   schedule?: string
@@ -337,10 +338,9 @@ export type ProgramPlan = {
 
 export const programs = {
   intro:
-    '브레인센트 코어 리셋 시스템™은 아이의 신경계 상태와 보호자의 필요에 따라 2가지 프로그램 중 선택할 수 있습니다.',
+    '브레인센트 코어 리셋 시스템™은 아래 프로그램으로 진행됩니다. 내용을 확인하신 뒤 신청해 주세요.',
   plans: [
     {
-      badge: '①',
       name: 'BASIC 코어 코칭 프로그램',
       schedule: '월 1회 대면 코칭',
       price: '150,000원',
@@ -358,17 +358,6 @@ export const programs = {
         '단기 코칭이 필요한 경우',
       ],
     },
-    {
-      badge: '②',
-      name: 'PREMIUM 코어 코칭 프로그램',
-      price: '390,000원',
-      option: '프리미엄 코어 리셋 시스템 390,000원',
-      // ⚠️ 원본 신청서에 프리미엄 구성이 적혀 있지 않았다.
-      //    구성이 정해지면 includes / forWhom 을 채우면 카드에 그대로 표시된다.
-      includes: [],
-      forWhom: [],
-      note: '구성 상세는 신청 후 상담 시 개별 안내드립니다.',
-    },
   ] as ProgramPlan[],
 } as const
 
@@ -377,24 +366,49 @@ export const programOptions = programs.plans.map((p) => p.option)
 
 /* ── 9. 상담 가능 일정 ── */
 
-export const scheduleInfo = {
-  desc: '대면 코칭 상담은 예약제로 진행됩니다. 가능하신 날짜와 시간을 최소 2개 이상 선택해 주세요.',
+export type ScheduleConfig = {
+  desc: string
+  sub: string
+  /** 기본 운영 시간 (HH:mm) — 추가 비용 없이 예약할 수 있는 시간대 */
+  baseTimes: string[]
+  /** 기본 시간 외 — 고르면 extraTimeFee 가 붙는다 */
+  extraTimes: string[]
+  /** 오늘로부터 며칠 뒤부터 고를 수 있는지 (0 이면 오늘부터) */
+  leadDays: number
+  /** 달력에서 앞으로 몇 달까지 넘겨볼 수 있는지 */
+  monthsAhead: number
+  minSelect: number
+  maxSelect: number
+  extraTimeFee: string
+  holidayFee: string
+  /**
+   * 추가 비용이 붙는 공휴일 ('YYYY-MM-DD').
+   * 일요일은 자동으로 휴일 처리되므로 여기에 적지 않는다.
+   * ⚠️ 해가 바뀌면 직접 갱신할 것 — 비워 두면 달력에 휴일 표시만 안 될 뿐,
+   *    notes 의 안내 문구와 실제 정책은 그대로다.
+   */
+  holidays: string[]
+  notes: string[]
+}
+
+export const scheduleInfo: ScheduleConfig = {
+  desc: '대면 코칭 상담은 예약제로 진행됩니다. 달력에서 날짜를 고른 뒤 시간을 선택해 주세요.',
   sub: '선택해주신 일정 중 최종 조율 후 개별 연락드립니다.',
-  slots: [
-    '8월 5일(수) 10시',
-    '8월 5일(수) 2시',
-    '8월 6일(목) 10시',
-    '8월 7일(금) 10시',
-    '8월 19일(수) 10시',
-    '8월 19일(수) 2시',
-  ],
+  baseTimes: ['10:00', '14:00'],
+  extraTimes: ['09:00', '11:00', '13:00', '15:00', '16:00', '17:00'],
+  leadDays: 1,
+  monthsAhead: 3,
   minSelect: 2,
+  maxSelect: 5,
+  extraTimeFee: '30,000원',
+  holidayFee: '50,000원',
+  holidays: [],
   notes: [
     '신청 순서에 따라 예약이 마감될 수 있습니다.',
     '일정 확정 후 개별 연락드립니다.',
-    '위 시간 외 가능한 시간에 신청 시 30,000원, 일요일 및 공휴일 신청 시 50,000원 추가 비용이 적용됩니다.',
+    '기본 시간(오전 10시 · 오후 2시) 외 시간에 신청 시 30,000원, 일요일 및 공휴일 신청 시 50,000원 추가 비용이 적용됩니다.',
   ],
-} as const
+}
 
 /* ── 10. 예약 및 환불 안내 ── */
 
@@ -412,11 +426,9 @@ export const refundPolicy = {
 /* ── 11. 프로그램 비용 및 입금 안내 ── */
 
 export const feeInfo = {
-  prices: [
-    { name: '베이직', value: '150,000원' },
-    { name: '프리미엄', value: '390,000원' },
-  ],
-  extra: '일요일·공휴일 예약 진행 시 50,000원 추가 비용이 발생합니다.',
+  prices: [{ name: '베이직', value: '150,000원' }],
+  extra:
+    '기본 시간(오전 10시 · 오후 2시) 외 시간에 예약 시 30,000원, 일요일·공휴일 예약 진행 시 50,000원 추가 비용이 발생합니다.',
   account: { bank: '기업은행', number: '667-029459-01-011', holder: '장지예' },
   afterDeposit: '입금 완료 후 예약이 최종 확정됩니다.',
   // 신청 접수 시 보호자·아이 이름이 담당자에게 자동으로 문자 발송되므로

@@ -15,6 +15,8 @@ import {
   RefreshCcw,
 } from 'lucide-react'
 import PageHero from '../components/PageHero'
+import ScheduleCalendar from '../components/ScheduleCalendar'
+import { slotLabel } from '../lib/schedule'
 import { site } from '../data/site'
 import {
   coreResetMeta,
@@ -99,6 +101,16 @@ export default function CoreResetPage() {
       return { ...a, [qid]: [...base, value] }
     })
     setErrors((e) => (e[qid] ? { ...e, [qid]: '' } : e))
+  }
+
+  /**
+   * 달력에서 고른 슬롯을 두 벌로 저장한다.
+   *  · schedule_slots — 'YYYY-MM-DDTHH:mm' 원본값 (달력 상태 복원·정렬용)
+   *  · schedule       — 사람이 읽는 라벨 (알림 문자·관리자 화면이 그대로 쓴다)
+   */
+  const setSchedule = (slots: string[]) => {
+    setAnswers((a) => ({ ...a, schedule_slots: slots, schedule: slots.map(slotLabel) }))
+    setErrors((e) => (e.schedule ? { ...e, schedule: '' } : e))
   }
 
   const setConsent = (key: ConsentKey, checked: boolean) => {
@@ -439,36 +451,21 @@ export default function CoreResetPage() {
             <p className="mt-3 text-[15px] leading-relaxed text-muted">{scheduleInfo.desc}</p>
             <p className="mt-1 text-[14px] leading-relaxed text-muted/90">({scheduleInfo.sub})</p>
 
-            <p className="mt-4 text-sm font-semibold text-brand-600">
-              {arr('schedule').length}개 선택 · 최소 {scheduleInfo.minSelect}개
-            </p>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {scheduleInfo.slots.map((slot) => (
-                <Chip
-                  key={slot}
-                  active={arr('schedule').includes(slot)}
-                  onClick={() => toggleMulti('schedule', slot)}
-                >
-                  {arr('schedule').includes(slot) && (
-                    <Check className="h-4 w-4" strokeWidth={3} aria-hidden="true" />
-                  )}
-                  {slot}
-                </Chip>
-              ))}
-            </div>
-            {errors.schedule && (
-              <p className="mt-1.5 text-sm font-medium text-red-500">{errors.schedule}</p>
-            )}
+            <ScheduleCalendar
+              selected={arr('schedule_slots')}
+              onChange={setSchedule}
+              error={errors.schedule}
+            />
 
             <div className="mt-6">
               <p className="text-[15px] font-bold text-ink">
-                위 일정이 모두 어려우시면 희망 시간을 적어 주세요
+                달력에서 고르기 어려운 시간이 필요하시면 희망 시간을 적어 주세요
               </p>
               <input
                 type="text"
                 value={str('schedule_other')}
                 onChange={(e) => setValue('schedule_other', e.target.value)}
-                placeholder="예) 8월 12일(수) 오후 3시"
+                placeholder="예) 평일 저녁 6시 이후 / 토요일 오전"
                 className="mt-2 w-full rounded-2xl border border-brand-100 bg-white px-4 py-3 text-[15px] text-ink outline-none transition placeholder:text-muted/70 focus:border-brand-400 focus:ring-2 focus:ring-brand-100"
               />
             </div>
